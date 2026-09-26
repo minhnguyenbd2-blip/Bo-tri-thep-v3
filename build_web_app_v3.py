@@ -1,0 +1,4341 @@
+﻿# -*- coding: utf-8 -*-
+"""
+Master Builder for Web Application Version 3.0: Web_Version_3/Cong_Cu_Gia_Thuyet_Thep_TCVN_v3.html
+BIG UPDATE v3.0 — Dark/Light Mode, Step-by-Step Formulas, μ Visualization Bar,
+Enhanced CAD-Grade SVG Engine, Tab 7 Weight Calculator, Toast Notifications,
+Comprehensive TCVN Engineering Guide, Glassmorphism UI, and Print-Friendly Layout.
+"""
+
+import os
+import sys
+
+if sys.stdout.encoding != 'utf-8':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
+
+HTML_V3 = r'''<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Rebar Studio v3.0 — Giả Thuyết & Thiết Kế Cốt Thép TCVN 5574:2018</title>
+  <style>
+    :root {
+      /* Colors */
+      --primary: #1e3a8a;
+      --primary-hover: #172554;
+      --primary-light: #eff6ff;
+      --secondary: #0284c7;
+      --accent: #0d9488;
+      --success: #16a34a;
+      --success-light: #f0fdf4;
+      --warning: #d97706;
+      --warning-light: #fffbeb;
+      --danger: #dc2626;
+      --danger-light: #fef2f2;
+      
+      /* Surfaces */
+      --bg-main: #f0f4f8;
+      --bg-card: #ffffff;
+      --bg-panel: #f8fafc;
+      --bg-input: #fffdf5;
+      --bg-hover: #f1f5f9;
+      
+      /* Text */
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-heading: #1e40af;
+      
+      /* Borders */
+      --border: #cbd5e1;
+      --border-focus: #f59e0b;
+      --input-border: #fcd34d;
+
+      /* Metrics */
+      --font-family: 'Times New Roman', Times, serif;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 14px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+      --radius: 12px;
+      --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    [data-theme="dark"] {
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --primary-light: #1e293b;
+      --secondary: #38bdf8;
+      --success: #22c55e;
+      --success-light: rgba(34, 197, 94, 0.2);
+      --warning: #fbbf24;
+      --warning-light: rgba(251, 191, 36, 0.2);
+      --danger: #ef4444;
+      --danger-light: rgba(239, 68, 68, 0.2);
+      
+      --bg-main: #020617;
+      --bg-card: #0f172a;
+      --bg-panel: #1e293b;
+      --bg-input: #1e293b;
+      --bg-hover: #334155;
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-heading: #60a5fa;
+      
+      --border: #334155;
+      --border-focus: #f59e0b;
+      --input-border: #d97706;
+    }
+    [data-theme="dark"] .navbar {
+      background: linear-gradient(135deg, #020617 0%, #0f172a 55%, #0c4a6e 100%);
+    }
+    [data-theme="dark"] .card { border-color: #334155; }
+    [data-theme="dark"] th { background: #334155; color: #e2e8f0; }
+    [data-theme="dark"] .chip { background: #334155; color: #93c5fd; border-color: var(--text-muted); }
+    [data-theme="dark"] .mode-switch-btn { background: #334155; color: #94a3b8; }
+    [data-theme="dark"] .mode-switch-btn.active { background: var(--primary); color: #fff; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+
+    /* TOP NAVBAR */
+    .navbar {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #0369a1 100%);
+      color: #ffffff;
+      padding: 16px 28px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      width: 46px;
+      height: 46px;
+      background: linear-gradient(135deg, #38bdf8, #0284c7);
+      color: #ffffff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .brand-title h1 {
+      font-size: 21px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-title p {
+      font-size: 13px;
+      color: #bae6fd;
+      margin-top: 2px;
+    }
+
+    .nav-badges {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .badge {
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-weight: bold;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      white-space: nowrap;
+    }
+
+    .badge-v2 {
+      background: #f59e0b;
+      color: var(--text-main);
+      box-shadow: 0 2px 6px rgba(245, 158, 11, 0.4);
+    }
+
+    .badge-tc {
+      background: #059669;
+      color: #ffffff;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 1440px;
+      margin: 22px auto;
+      padding: 0 20px;
+    }
+
+    /* TABS */
+    .tab-nav {
+      display: flex;
+      gap: 8px;
+      background: var(--bg-card);
+      padding: 8px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      margin-bottom: 22px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 12px 14px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font-family);
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      background: #f1f5f9;
+      color: var(--text-main);
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(30, 58, 138, 0.28);
+    }
+
+    .tab-count-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: bold;
+      margin-left: 4px;
+    }
+
+    .tab-btn:not(.active) .tab-count-badge {
+      background: #e2e8f0;
+      color: var(--text-main);
+    }
+
+    /* WORK AREA GRID */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .calc-layout {
+      display: grid;
+      grid-template-columns: 520px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 1150px) {
+      .calc-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      margin-bottom: 22px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1.5px solid #e2e8f0;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      font-size: 17.5px;
+      font-weight: bold;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* SUB-MODE SWITCH (AUTO vs CUSTOM) */
+    .mode-switch-bar {
+      display: flex;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      border: 1.5px solid #cbd5e1;
+    }
+
+    .mode-switch-btn {
+      flex: 1;
+      padding: 10px 14px;
+      font-family: var(--font-family);
+      font-size: 15px;
+      font-weight: bold;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      border-radius: 7px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .mode-switch-btn:hover {
+      color: var(--primary);
+    }
+
+    .mode-switch-btn.active {
+      background: var(--bg-card);
+      color: var(--primary);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      border: 1px solid #94a3b8;
+    }
+
+    /* FORM INPUTS */
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 13.5px;
+      font-weight: bold;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid var(--input-border);
+      background-color: var(--input-bg);
+      border-radius: 8px;
+      font-family: var(--font-family);
+      font-size: 15px;
+      font-weight: bold;
+      color: var(--text-main);
+      transition: all 0.2s;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: #d97706;
+      box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
+      background-color: var(--bg-card);
+    }
+
+    select.input-field {
+      cursor: pointer;
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    input[type=range] {
+      flex: 1;
+      height: 6px;
+      background: #cbd5e1;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .slider-val {
+      min-width: 60px;
+      padding: 4px 8px;
+      background: #eff6ff;
+      color: var(--primary);
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      font-weight: bold;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .quick-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .chip {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+
+    .chip:hover {
+      background: #e2e8f0;
+      color: var(--primary);
+    }
+
+    /* STATS BOXES */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stat-box {
+      background: var(--bg-panel);
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
+
+    .stat-label {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .stat-value {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .stat-sub {
+      font-size: 12px;
+      font-weight: normal;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .stat-unit {
+      font-size: 13px;
+      font-weight: normal;
+      color: var(--text-muted);
+    }
+
+    /* REBAR CARDS (SUGGESTIONS) */
+    .rebar-card {
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+      background: var(--bg-card);
+    }
+
+    .rebar-card:hover {
+      border-color: var(--secondary);
+      background: var(--bg-hover);
+      transform: translateY(-1px);
+    }
+
+    .rebar-card.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.2);
+    }
+
+    .rebar-info h4 {
+      font-size: 15px;
+      font-weight: bold;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .rebar-tag {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .tag-opt { background: #dcfce7; color: #15803d; }
+    .tag-uni { background: #e0e7ff; color: #4338ca; }
+    .tag-eco { background: #fef3c7; color: #b45309; }
+
+    .rebar-sub {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .rebar-as {
+      text-align: right;
+    }
+
+    .as-num {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .as-mu {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    /* AUDIT & DIAGNOSTIC CARD */
+    .audit-card {
+      background: var(--bg-card);
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .audit-title {
+      font-size: 15px;
+      font-weight: bold;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+
+    .audit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px dashed #f1f5f9;
+      font-size: 13.5px;
+    }
+
+    .audit-item:last-child {
+      border-bottom: none;
+    }
+
+    .audit-icon {
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .audit-text {
+      flex: 1;
+    }
+
+    .audit-text b {
+      color: #1e293b;
+    }
+
+    .audit-badge {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .badge-pass { background: #dcfce7; color: #166534; }
+    .badge-warn { background: #fef3c7; color: #92400e; }
+    .badge-fail { background: #fee2e2; color: #991b1b; }
+
+    /* OVERALL VERDICT BANNER */
+    .verdict-banner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin-top: 14px;
+      font-size: 14.5px;
+      font-weight: bold;
+      border: 1.5px solid transparent;
+    }
+
+    .verdict-pass {
+      background: #f0fdf4;
+      border-color: #86efac;
+      color: #166534;
+    }
+
+    .verdict-warn {
+      background: #fffbeb;
+      border-color: #fde68a;
+      color: #92400e;
+    }
+
+    .verdict-fail {
+      background: #fef2f2;
+      border-color: #fca5a5;
+      color: #991b1b;
+    }
+
+    /* RIGHT PANE (CAD SVG PREVIEW) */
+    .vis-pane {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: sticky;
+      top: 86px;
+    }
+
+    .vis-toolbar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .cad-controls {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .cad-controls label {
+      font-size: 13px;
+      margin-bottom: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: normal;
+    }
+
+    /* SVG CONTAINER: ZERO-COLLISION QUADRANT ARCHITECTURE */
+    .svg-container {
+      width: 100%;
+      height: 480px;
+      background: var(--bg-card);
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+
+    .svg-container svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .vis-actions {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      margin-top: 16px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 12px 16px;
+      font-family: var(--font-family);
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid #cbd5e1;
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    /* CUSTOM BOX STYLING */
+    .custom-box {
+      background: var(--bg-panel);
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .custom-box-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: #1e3a8a;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* SECTION 6: GUIDE STYLING */
+    .guide-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 26px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .guide-title {
+      font-size: 19px;
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 10px;
+    }
+
+    .guide-step-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .guide-step-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .guide-step-card {
+      background: var(--bg-panel);
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid var(--secondary);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .guide-step-num {
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--secondary);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .guide-step-name {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .rule-card {
+      background: var(--bg-panel);
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+    }
+
+    .rule-card-header {
+      font-size: 15.5px;
+      font-weight: bold;
+      color: #1e3a8a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    /* TABLES */
+    .table-container {
+      overflow-x: auto;
+      margin-top: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+    }
+
+    th {
+      background-color: var(--bg-hover);
+      color: var(--text-main);
+      font-weight: bold;
+      position: sticky;
+      top: 0;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    tr:hover {
+      background-color: #f1f5f9;
+    }
+
+    .btn-delete {
+      padding: 4px 8px;
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #f87171;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: var(--font-family);
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .btn-delete:hover {
+      background: #fca5a5;
+    }
+
+    /* === V3 NEW: μ RANGE VISUALIZATION BAR === */
+    .mu-viz-bar {
+      display: flex;
+      height: 12px;
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+      margin: 10px 0 4px 0;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .mu-viz-bar .zone { height: 100%; }
+    .mu-viz-bar .zone-danger-low { width: 8%; background: linear-gradient(90deg, #ef4444, #f87171); }
+    .mu-viz-bar .zone-ok { width: 60%; background: linear-gradient(90deg, #22c55e, #4ade80); }
+    .mu-viz-bar .zone-warn { width: 22%; background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+    .mu-viz-bar .zone-danger-high { width: 10%; background: linear-gradient(90deg, #f87171, #dc2626); }
+    .mu-viz-bar .marker {
+      position: absolute;
+      top: -4px;
+      width: 4px;
+      height: 20px;
+      background: #0f172a;
+      border-radius: 2px;
+      transition: left 0.3s ease;
+      box-shadow: 0 0 4px rgba(0,0,0,0.4);
+    }
+    [data-theme="dark"] .mu-viz-bar .marker { background: #f1f5f9; }
+    .mu-viz-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* === V3 NEW: STEP-BY-STEP FORMULA PANEL === */
+    .formula-steps {
+      background: var(--primary-light);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 13.5px;
+      line-height: 1.8;
+    }
+    .formula-steps .step-label {
+      color: var(--primary);
+      font-weight: bold;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .formula-steps .step-line {
+      color: var(--text-main);
+    }
+    .formula-steps .step-result {
+      color: var(--success);
+      font-weight: bold;
+      font-size: 15px;
+    }
+    .formula-steps .step-result.warn { color: var(--warning); }
+    .formula-steps .step-result.fail { color: var(--danger); }
+
+    /* === V3 NEW: TOAST NOTIFICATION SYSTEM === */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .toast {
+      background: var(--bg-card);
+      color: var(--text-main);
+      padding: 14px 20px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-lg);
+      border-left: 5px solid var(--success);
+      transform: translateX(120%);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      font-family: var(--font-family);
+      font-size: 14px;
+      max-width: 360px;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast-warn { border-left-color: var(--warning); }
+    .toast-error { border-left-color: var(--danger); }
+
+    /* === V3 NEW: DARK MODE TOGGLE BUTTON === */
+    .dark-toggle-btn {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #ffffff;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: var(--transition);
+    }
+    .dark-toggle-btn:hover {
+      background: rgba(255,255,255,0.25);
+    }
+
+    /* === V3 ENHANCED: BODY TRANSITION === */
+    body {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* === V3 ENHANCED: PRINT STYLES === */
+    @media print {
+      .navbar, .tab-nav, .vis-actions, .quick-chips, .mode-switch-bar, .vis-toolbar, button, .toast-container, .dark-toggle-btn, .mu-viz-bar, .mu-viz-labels {
+        display: none !important;
+      }
+      .calc-layout {
+        grid-template-columns: 1fr 1fr;
+      }
+      .vis-pane {
+        position: static;
+        box-shadow: none;
+      }
+      body {
+        padding: 0;
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .card {
+        background: #ffffff !important;
+        box-shadow: none !important;
+        border: 1px solid #000 !important;
+        break-inside: avoid;
+      }
+      input, select, .formula-steps, .stat-box {
+        background: #ffffff !important;
+        color: #000000 !important;
+        border: 1px solid #ccc !important;
+      }
+      .rebar-card {
+        background: #ffffff !important;
+        border: 1px solid #ccc !important;
+        color: #000000 !important;
+      }
+      .tab-content { display: none !important; }
+      .tab-content.active { display: block !important; }
+      /* Force SVG stroke and text color to dark when printing to override Dark mode */
+      svg text, svg line, svg polyline {
+        filter: none !important;
+      }
+    }
+
+    /* === V3 ENHANCED: RESPONSIVE === */
+    @media (max-width: 768px) {
+      .calc-layout { grid-template-columns: 1fr; }
+      .tab-nav { flex-wrap: wrap; gap: 4px; }
+      .tab-btn { font-size: 12px; padding: 8px 10px; }
+      .navbar { flex-direction: column; text-align: center; gap: 10px; }
+      .nav-badges { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAVBAR (V3 Enhanced) -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <div class="brand-icon">🏗️</div>
+      <div class="brand-title">
+        <h1>SMART REBAR STUDIO — GIẢ THUYẾT & THIẾT KẾ CỐT THÉP</h1>
+        <p>Hệ thống tự động giả thuyết, tùy biến bố trí và kiểm định hợp lý theo TCVN 5574:2018</p>
+      </div>
+    </div>
+    <div class="nav-badges">
+      <span class="badge badge-v2">⚡ Phiên Bản 3.0</span>
+      <span class="badge badge-tc">TCVN 5574:2018</span>
+      <button class="dark-toggle-btn" id="dark-toggle" onclick="toggleDarkMode()" title="Chuyển đổi sáng/tối">🌙</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- TAB NAVIGATION -->
+    <nav class="tab-nav">
+      <button class="tab-btn active" id="btn-tab-beam" onclick="switchTab('beam')">
+        <span>📏</span> 1. DẦM (BEAM)
+      </button>
+      <button class="tab-btn" id="btn-tab-column" onclick="switchTab('column')">
+        <span>🏛️</span> 2. CỘT (COLUMN)
+      </button>
+      <button class="tab-btn" id="btn-tab-slab" onclick="switchTab('slab')">
+        <span>🔲</span> 3. BẢN SÀN (SLAB)
+      </button>
+      <button class="tab-btn" id="btn-tab-standards" onclick="switchTab('standards')">
+        <span>📘</span> 4. BẢNG TRA TCVN 5574:2018
+      </button>
+      <button class="tab-btn" id="btn-tab-project" onclick="switchTab('project')">
+        <span>📋</span> 5. DANH MỤC DỰ ÁN <span id="proj-count" class="tab-count-badge">0</span>
+      </button>
+      <button class="tab-btn" id="btn-tab-guide" onclick="switchTab('guide')">
+        <span>📖</span> 6. HƯỚNG DẪN & LƯU Ý KỸ THUẬT
+      </button>
+      <button class="tab-btn" id="btn-tab-weight" onclick="switchTab('weight')">
+        <span>⚖️</span> 7. THỐNG KÊ KHỐI LƯỢNG
+      </button>
+    </nav>
+
+    <!-- ======================================================== -->
+    <!-- TAB 1: DẦM (BEAM) -->
+    <!-- ======================================================== -->
+    <section id="beam-tab" class="tab-content active">
+      <div class="calc-layout">
+        
+        <!-- Left: Inputs & Controls -->
+        <div>
+          <!-- Card: Nhập kích thước dầm -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title"><span>📐</span> Nhập Tiết Diện Dầm (b x h)</h2>
+              <span class="badge" style="background:#dbeafe; color:#1e40af;">Chỉ Nhập Kích Thước</span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="beam-name">Ký Hiệu Cấu Kiện</label>
+                <input type="text" id="beam-name" class="input-field" value="Dầm D2-2 (Trục 2)">
+              </div>
+              <div class="form-group">
+                <label for="beam-pos">Vị Trí Tiết Diện</label>
+                <select id="beam-pos" class="input-field" onchange="updateBeamPos()">
+                  <option value="Gối" selected>Tiết Diện Gối (Thép trên chịu M-)</option>
+                  <option value="Nhịp">Tiết Diện Nhịp (Thép dưới chịu M+)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="beam-b">Bề Rộng b (mm)</label>
+                <input type="number" id="beam-b" class="input-field" value="200" step="10" min="150" max="800" oninput="onBeamDimensionChange()">
+              </div>
+              <div class="form-group">
+                <label for="beam-h">Chiều Cao h (mm)</label>
+                <input type="number" id="beam-h" class="input-field" value="400" step="10" min="200" max="1500" oninput="onBeamDimensionChange()">
+              </div>
+            </div>
+
+            <!-- Quick chips -->
+            <label style="margin-top:4px;">Kích thước dầm phổ biến trong công trình:</label>
+            <div class="quick-chips">
+              <span class="chip" onclick="setBeamSize(200, 300)">200 x 300 (Dầm phụ ngắn)</span>
+              <span class="chip" onclick="setBeamSize(200, 350)">200 x 350 (Dầm phụ D2-3)</span>
+              <span class="chip" onclick="setBeamSize(200, 400)">200 x 400 (Dầm chính D2-2)</span>
+              <span class="chip" onclick="setBeamSize(220, 500)">220 x 500 (Dầm nhịp 6m)</span>
+            </div>
+
+            <div class="form-group" style="margin-top:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label for="beam-mu">Hàm Lượng Giả Thuyết μ_yc (%)</label>
+                <span id="beam-mu-txt" class="slider-val">1.45%</span>
+              </div>
+              <div class="slider-container">
+                <input type="range" id="beam-mu" min="0.10" max="4.00" step="0.05" value="1.45" oninput="onBeamMuSlider()">
+              </div>
+              <div class="mu-viz-bar">
+                <div class="zone zone-danger-low"></div>
+                <div class="zone zone-ok"></div>
+                <div class="zone zone-warn"></div>
+                <div class="zone zone-danger-high"></div>
+                <div class="marker" id="beam-mu-marker"></div>
+              </div>
+              <div class="mu-viz-labels">
+                <span>μ_min (0.1%)</span>
+                <span>μ_max (2.34%)</span>
+              </div>
+              <div class="quick-chips" style="margin-top: 10px;">
+                <span class="chip" onclick="setBeamMu(0.90)">0.90% (Nhịp biên)</span>
+                <span class="chip" onclick="setBeamMu(1.20)">1.20% (Nhịp giữa)</span>
+                <span class="chip" onclick="setBeamMu(1.45)">1.45% (Gối dầm chính)</span>
+                <span class="chip" onclick="setBeamMu(1.80)">1.80% (Gối mômen lớn)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card: Kết quả & Chế độ chọn thép -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title"><span>📊</span> Bố Trí Cốt Thép Dầm</h2>
+              <div style="font-size:13px; color:var(--text-muted);">As_yc = <span id="beam-as-req-badge" style="font-weight:bold; color:#d97706;">10.44 cm² (1044 mm²)</span></div>
+            </div>
+
+            <!-- SUB-MODE SWITCH: AUTO vs CUSTOM -->
+            <div class="mode-switch-bar">
+              <button id="beam-btn-mode-auto" class="mode-switch-btn active" onclick="setBeamMode('auto')">
+                <span>⚡</span> Gợi Ý Tự Động (Auto)
+              </button>
+              <button id="beam-btn-mode-custom" class="mode-switch-btn" onclick="setBeamMode('custom')">
+                <span>🛠️</span> Tùy Chỉnh Nâng Cao & Kiểm Tra
+              </button>
+            </div>
+
+            <!-- MODE 1: AUTO SUGGESTIONS -->
+            <div id="beam-auto-panel">
+              <label style="margin-bottom:8px; display:block;">Chọn nhanh phương án cốt thép tối ưu (click để nạp):</label>
+              <div id="beam-rebar-options">
+                <!-- Rendered by JS -->
+              </div>
+              <button class="btn btn-outline" style="width:100%; margin-top:8px;" onclick="loadAutoToCustomBeam()">
+                <span>✏️</span> Chuyển Phương Án Đang Chọn Sang Bảng Tùy Chỉnh
+              </button>
+            </div>
+
+            <!-- MODE 2: ADVANCED CUSTOMIZER -->
+            <div id="beam-custom-panel" style="display:none;">
+              <!-- Custom Lớp 1 -->
+              <div class="custom-box">
+                <div class="custom-box-title">
+                  <span>🔹 Lớp 1 (Lớp Ngoài Cùng)</span>
+                  <span id="beam-custom-as-l1" style="color:var(--primary); font-weight:bold;">6.28 cm² (628 mm²)</span>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Số lượng thanh (n1)</label>
+                    <select id="beam-c-n1" class="input-field" onchange="runBeamCustomAudit()">
+                      <option value="2">2 thanh</option>
+                      <option value="3">3 thanh</option>
+                      <option value="4">4 thanh</option>
+                      <option value="5">5 thanh</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Đường kính (Phi 1)</label>
+                    <select id="beam-c-phi1" class="input-field" onchange="runBeamCustomAudit()">
+                      <option value="16">Phi 16</option>
+                      <option value="18">Phi 18</option>
+                      <option value="20" selected>Phi 20</option>
+                      <option value="22">Phi 22</option>
+                      <option value="25">Phi 25</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Custom Lớp 2 -->
+              <div class="custom-box">
+                <div class="custom-box-title">
+                  <span>🔹 Lớp 2 (Lớp Phía Trong)</span>
+                  <span id="beam-custom-as-l2" style="color:var(--primary); font-weight:bold;">5.09 cm² (509 mm²)</span>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Số lượng thanh (n2)</label>
+                    <select id="beam-c-n2" class="input-field" onchange="runBeamCustomAudit()">
+                      <option value="0">0 (Không bố trí lớp 2)</option>
+                      <option value="2" selected>2 thanh</option>
+                      <option value="3">3 thanh</option>
+                      <option value="4">4 thanh</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Đường kính (Phi 2)</label>
+                    <select id="beam-c-phi2" class="input-field" onchange="runBeamCustomAudit()">
+                      <option value="16">Phi 16</option>
+                      <option value="18" selected>Phi 18</option>
+                      <option value="20">Phi 20</option>
+                      <option value="22">Phi 22</option>
+                      <option value="25">Phi 25</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cốt Thép Đai -->
+              <div class="custom-box">
+                <div class="custom-box-title">
+                  <span>🌀 Cốt Thép Đai & Cấu Tạo</span>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Đường kính đai</label>
+                    <select id="beam-c-phidai" class="input-field" onchange="runBeamCustomAudit()">
+                      <option value="6">Phi 6 (CB240-T)</option>
+                      <option value="8" selected>Phi 8 (CB240-T / CB300-V)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Khoảng cách đai (a)</label>
+                    <select id="beam-c-stepdai" class="input-field" onchange="runBeamCustomAudit()">
+                      <option value="100">a100 (Đoạn gối 1/4L)</option>
+                      <option value="150">a150 (Vùng uốn chính)</option>
+                      <option value="200" selected>a200 (Đoạn nhịp giữa)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BẢNG CHẨN ĐOÁN & KIỂM TRA HỢP LÝ -->
+            <div class="audit-card">
+              <div class="audit-title">
+                <span>🔍 KẾT QUẢ KIỂM ĐỊNH KỸ THUẬT (TCVN 5574:2018)</span>
+                <span id="beam-audit-mode-lbl" style="font-size:12px; color:var(--text-muted);">Chế độ: Gợi ý</span>
+              </div>
+
+              <!-- Check 1: Khả năng chịu lực -->
+              <div class="audit-item">
+                <span class="audit-icon" id="beam-chk-as-icon">✅</span>
+                <div class="audit-text">
+                  <b>1. Khả năng chịu lực (As chọn vs As yc):</b>
+                  <div id="beam-chk-as-desc" style="font-size:12.5px; color:var(--text-muted);">As = 11.37 cm² ≥ As_yc = 10.44 cm² (Dư +8.9% - Rất tối ưu)</div>
+                </div>
+                <span class="audit-badge badge-pass" id="beam-chk-as-badge">ĐẠT CHUẨN</span>
+              </div>
+
+              <!-- Check 2: Hàm lượng cốt thép -->
+              <div class="audit-item">
+                <span class="audit-icon" id="beam-chk-mu-icon">✅</span>
+                <div class="audit-text">
+                  <b>2. Hàm lượng cốt thép μ:</b>
+                  <div id="beam-chk-mu-desc" style="font-size:12.5px; color:var(--text-muted);">0.10% ≤ μ = 1.58% ≤ 2.34% (Nằm trong vùng hợp lý 0.8% - 1.8%)</div>
+                </div>
+                <span class="audit-badge badge-pass" id="beam-chk-mu-badge">HỢP LÝ</span>
+              </div>
+
+              <!-- Check 3: Khoảng hở đổ bê tông -->
+              <div class="audit-item">
+                <span class="audit-icon" id="beam-chk-t-icon">✅</span>
+                <div class="audit-text">
+                  <b>3. Khoảng hở thông thủy đổ bê tông (t):</b>
+                  <div id="beam-chk-t-desc" style="font-size:12.5px; color:var(--text-muted);">t_Lớp1 = 47 mm (≥ 30mm & ≥ d_max - Dễ đầm dùi)</div>
+                </div>
+                <span class="audit-badge badge-pass" id="beam-chk-t-badge">ĐẠT</span>
+              </div>
+
+              <!-- Check 4: Tính đồng nhất & bố trí lớp -->
+              <div class="audit-item">
+                <span class="audit-icon" id="beam-chk-uni-icon">✅</span>
+                <div class="audit-text">
+                  <b>4. Tính đồng nhất & quy cách lớp thép:</b>
+                  <div id="beam-chk-uni-desc" style="font-size:12.5px; color:var(--text-muted);">Đường kính chênh lệch ≤ 2mm, n2 ≤ n1 đúng chuẩn</div>
+                </div>
+                <span class="audit-badge badge-pass" id="beam-chk-uni-badge">ĐỒNG NHẤT</span>
+              </div>
+            </div>
+
+            <!-- OVERALL VERDICT -->
+            <div id="beam-verdict" class="verdict-banner verdict-pass">
+              <span id="beam-verdict-icon" style="font-size:20px;">🛡️</span>
+              <span id="beam-verdict-text">KẾT LUẬN: Phương án bố trí cốt thép HỢP LÝ, đạt đầy đủ tiêu chuẩn chịu lực và thi công TCVN 5574:2018!</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: Realtime CAD/SVG Visualizer Dầm -->
+        <div>
+          <div class="vis-pane">
+            <div class="vis-toolbar">
+              <h3 style="font-size:16px; font-weight:bold; color:var(--primary); display:flex; align-items:center; gap:8px;">
+                <span>📐</span> Bản Vẽ Mặt Cắt Tiết Diện Dầm (Chuẩn Kỹ Thuật CAD)
+              </h3>
+              <span id="beam-vis-dim" style="font-size:13px; font-weight:bold; background:#e0e7ff; color:#4338ca; padding:3px 10px; border-radius:6px;">200 x 400 mm</span>
+            </div>
+
+            <!-- CAD Display Controls -->
+            <div class="cad-controls" style="width:100%; margin-bottom:10px;">
+              <label><input type="checkbox" id="beam-chk-dim" checked onchange="calculateBeam()"> Hiện kích thước CAD</label>
+              <label><input type="checkbox" id="beam-chk-leader" checked onchange="calculateBeam()"> Hiện ghi chú thép</label>
+              <label><input type="checkbox" id="beam-chk-axis" checked onchange="calculateBeam()"> Hiện trục tim</label>
+            </div>
+
+            <!-- Dynamic SVG Container (Zero-Collision Quadrant Layout) -->
+            <div class="svg-container" id="beam-svg-wrapper">
+              <svg id="beam-svg" viewBox="0 0 700 520" preserveAspectRatio="xMidYMid meet"></svg>
+            </div>
+
+            <div class="stats-grid" style="width:100%; margin-top:14px;">
+              <div class="stat-box">
+                <div class="stat-label">Khoảng hở thông thủy (t)</div>
+                <div class="stat-value" id="beam-t-val">47 <span class="stat-unit">mm</span></div>
+                <div id="beam-t-eval" style="font-size:11.5px; font-weight:bold; color:#16a34a;">✅ Đạt thông thủy (t ≥ 30mm)</div>
+                <div class="stat-sub">Khoảng hở giữa 2 thanh thép lớp 1</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-label">Tổng diện tích As chọn</div>
+                <div class="stat-value" id="beam-as-act-val">11.37 <span class="stat-unit">cm²</span></div>
+                <div id="beam-as-eval" style="font-size:11.5px; color:#16a34a; font-weight:bold;">Thỏa mãn As_yc = 10.44 cm²</div>
+                <div class="stat-sub" id="beam-as-mm-sub">Tương đương 1,137 mm²</div>
+              </div>
+            </div>
+
+            <div class="vis-actions">
+              <button class="btn btn-primary" onclick="addBeamToProject()">
+                <span>➕</span> Thêm Dầm Vào Dự Án
+              </button>
+              <button class="btn btn-outline" onclick="window.print()">
+                <span>🖨️</span> In Bản Vẽ
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 2: CỘT (COLUMN) -->
+    <!-- ======================================================== -->
+    <section id="column-tab" class="tab-content">
+      <div class="calc-layout">
+        
+        <!-- Left: Inputs & Computed Values -->
+        <div>
+          <!-- Card: Nhập kích thước cột -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title"><span>🏛️</span> Nhập Tiết Diện Cột (b x h)</h2>
+              <span class="badge" style="background:#dbeafe; color:#1e40af;">Chỉ Nhập Kích Thước</span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="col-name">Ký Hiệu Cột</label>
+                <input type="text" id="col-name" class="input-field" value="Cột C1 (Trục B-2)">
+              </div>
+              <div class="form-group">
+                <label for="col-floor">Tầng Bố Trí</label>
+                <select id="col-floor" class="input-field" onchange="updateColFloor()">
+                  <option value="Tầng 1" selected>Tầng 1 (Cần hàm lượng cao)</option>
+                  <option value="Tầng 2">Tầng 2 (Mômen & Lực dọc trung bình)</option>
+                  <option value="Tầng 3 / Mái">Tầng 3 / Mái (Lực dọc bé)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="col-b">Cạnh b (mm)</label>
+                <input type="number" id="col-b" class="input-field" value="200" step="10" min="200" max="1000" oninput="onColDimensionChange()">
+              </div>
+              <div class="form-group">
+                <label for="col-h">Cạnh h (mm)</label>
+                <input type="number" id="col-h" class="input-field" value="300" step="10" min="200" max="1500" oninput="onColDimensionChange()">
+              </div>
+            </div>
+
+            <!-- Quick chips -->
+            <label style="margin-top:4px;">Kích thước cột phổ biến trong công trình:</label>
+            <div class="quick-chips">
+              <span class="chip" onclick="setColSize(200, 200)">200 x 200 (Cột phụ T3)</span>
+              <span class="chip" onclick="setColSize(200, 300)">200 x 300 (Cột C1 T1-T2)</span>
+              <span class="chip" onclick="setColSize(250, 300)">250 x 300 (Cột C2 T1-T2)</span>
+              <span class="chip" onclick="setColSize(300, 400)">300 x 400 (Cột khung lớn)</span>
+            </div>
+
+            <div class="form-group" style="margin-top:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label for="col-mu">Hàm Lượng Giả Thuyết μ_yc (%)</label>
+                <span id="col-mu-txt" class="slider-val">2.30%</span>
+              </div>
+              <div class="slider-container">
+                <input type="range" id="col-mu" min="0.10" max="4.00" step="0.05" value="2.30" oninput="onColMuSlider()">
+              </div>
+              <div class="mu-viz-bar">
+                <div class="zone zone-danger-low"></div>
+                <div class="zone zone-ok"></div>
+                <div class="zone zone-warn"></div>
+                <div class="zone zone-danger-high"></div>
+                <div class="marker" id="col-mu-marker"></div>
+              </div>
+              <div class="mu-viz-labels">
+                <span>μ_min (0.1%)</span>
+                <span>μ_max (3.0%)</span>
+              </div>
+              <div class="quick-chips" style="margin-top: 10px;">
+                <span class="chip" onclick="setColMu(1.50)">1.50% (Tầng đỉnh)</span>
+                <span class="chip" onclick="setColMu(2.00)">2.00% (Tầng 2)</span>
+                <span class="chip" onclick="setColMu(2.30)">2.30% (Tầng 1 - C1)</span>
+                <span class="chip" onclick="setColMu(2.80)">2.80% (Tầng 1 - C2)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card: Kết quả & Chế độ chọn thép cột -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title"><span>📊</span> Bố Trí Cốt Thép Cột Đối Xứng</h2>
+              <div style="font-size:13px; color:var(--text-muted);">Ast_yc = <span id="col-ast-req-badge" style="font-weight:bold; color:#d97706;">13.80 cm² (1380 mm²)</span></div>
+            </div>
+
+            <!-- SUB-MODE SWITCH: AUTO vs CUSTOM -->
+            <div class="mode-switch-bar">
+              <button id="col-btn-mode-auto" class="mode-switch-btn active" onclick="setColMode('auto')">
+                <span>⚡</span> Gợi Ý Tự Động (Auto)
+              </button>
+              <button id="col-btn-mode-custom" class="mode-switch-btn" onclick="setColMode('custom')">
+                <span>🛠️</span> Tùy Chỉnh Nâng Cao & Kiểm Tra
+              </button>
+            </div>
+
+            <!-- MODE 1: AUTO SUGGESTIONS -->
+            <div id="col-auto-panel">
+              <label style="margin-bottom:8px; display:block;">Chọn nhanh phương án thép cột đối xứng:</label>
+              <div id="col-rebar-options">
+                <!-- Rendered by JS -->
+              </div>
+              <button class="btn btn-outline" style="width:100%; margin-top:8px;" onclick="loadAutoToCustomCol()">
+                <span>✏️</span> Chuyển Phương Án Đang Chọn Sang Bảng Tùy Chỉnh
+              </button>
+            </div>
+
+            <!-- MODE 2: ADVANCED CUSTOMIZER -->
+            <div id="col-custom-panel" style="display:none;">
+              <!-- 4 Góc Cột -->
+              <div class="custom-box">
+                <div class="custom-box-title">
+                  <span>📍 4 Cốt Thép Góc (4 Góc Cột)</span>
+                  <span id="col-custom-as-corner" style="color:var(--primary); font-weight:bold;">10.18 cm² (1018 mm²)</span>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Số lượng thanh</label>
+                    <input type="text" class="input-field" value="4 thanh (cố định góc)" disabled style="background:#f1f5f9;">
+                  </div>
+                  <div class="form-group">
+                    <label>Đường kính 4 góc (Phi)</label>
+                    <select id="col-c-phi-corner" class="input-field" onchange="runColCustomAudit()">
+                      <option value="16">Phi 16</option>
+                      <option value="18" selected>Phi 18</option>
+                      <option value="20">Phi 20</option>
+                      <option value="22">Phi 22</option>
+                      <option value="25">Phi 25</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Thép Dọc Cạnh h -->
+              <div class="custom-box">
+                <div class="custom-box-title">
+                  <span>↕️ Cốt Dọc Cạnh h (Mỗi bên)</span>
+                  <span id="col-custom-as-sideh" style="color:var(--primary); font-weight:bold;">4.02 cm² (402 mm²)</span>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Số thanh mỗi bên h</label>
+                    <select id="col-c-nh" class="input-field" onchange="runColCustomAudit()">
+                      <option value="0">0 (Cột 4 thanh góc)</option>
+                      <option value="1" selected>1 thanh mỗi bên (Cột 6 thanh)</option>
+                      <option value="2">2 thanh mỗi bên (Cột 8 thanh)</option>
+                      <option value="3">3 thanh mỗi bên (Cột 10 thanh)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Đường kính cạnh h</label>
+                    <select id="col-c-phi-h" class="input-field" onchange="runColCustomAudit()">
+                      <option value="16" selected>Phi 16</option>
+                      <option value="18">Phi 18</option>
+                      <option value="20">Phi 20</option>
+                      <option value="22">Phi 22</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Thép Dọc Cạnh b -->
+              <div class="custom-box">
+                <div class="custom-box-title">
+                  <span>↔️ Cốt Dọc Cạnh b (Mỗi bên)</span>
+                  <span id="col-custom-as-sideb" style="color:var(--primary); font-weight:bold;">0.00 cm² (0 mm²)</span>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Số thanh mỗi bên b</label>
+                    <select id="col-c-nb" class="input-field" onchange="runColCustomAudit()">
+                      <option value="0" selected>0 (Không bố trí thêm)</option>
+                      <option value="1">1 thanh mỗi bên</option>
+                      <option value="2">2 thanh mỗi bên</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Đường kính cạnh b</label>
+                    <select id="col-c-phi-b" class="input-field" onchange="runColCustomAudit()">
+                      <option value="16">Phi 16</option>
+                      <option value="18">Phi 18</option>
+                      <option value="20">Phi 20</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Thép đai cột -->
+              <div class="custom-box">
+                <div class="custom-box-title">
+                  <span>🌀 Cốt Thép Đai Cột (TCVN 5574:2018)</span>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Đường kính đai</label>
+                    <select id="col-c-phidai" class="input-field" onchange="runColCustomAudit()">
+                      <option value="6" selected>Phi 6 (Thỏa d_max/4)</option>
+                      <option value="8">Phi 8 (CB240-T)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Bước đai đoạn nối / đoạn giữa</label>
+                    <select id="col-c-stepdai" class="input-field" onchange="runColCustomAudit()">
+                      <option value="100">a100 / a200 (Tiêu chuẩn công trình)</option>
+                      <option value="150">a150 / a250</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BẢNG CHẨN ĐOÁN & KIỂM TRA HỢP LÝ CỘT -->
+            <div class="audit-card">
+              <div class="audit-title">
+                <span>🔍 KẾT QUẢ KIỂM ĐỊNH KỸ THUẬT CỘT (TCVN 5574:2018)</span>
+                <span id="col-audit-mode-lbl" style="font-size:12px; color:var(--text-muted);">Chế độ: Gợi ý</span>
+              </div>
+
+              <!-- Check 1: Khả năng chịu lực -->
+              <div class="audit-item">
+                <span class="audit-icon" id="col-chk-as-icon">✅</span>
+                <div class="audit-text">
+                  <b>1. Diện tích cốt thép chịu nén (Ast vs Ast_yc):</b>
+                  <div id="col-chk-as-desc" style="font-size:12.5px; color:var(--text-muted);">Ast = 14.20 cm² ≥ Ast_yc = 13.80 cm² (Đạt)</div>
+                </div>
+                <span class="audit-badge badge-pass" id="col-chk-as-badge">ĐẠT CHUẨN</span>
+              </div>
+
+              <!-- Check 2: Hàm lượng cốt thép -->
+              <div class="audit-item">
+                <span class="audit-icon" id="col-chk-mu-icon">✅</span>
+                <div class="audit-text">
+                  <b>2. Hàm lượng cốt thép toàn phần μ_t:</b>
+                  <div id="col-chk-mu-desc" style="font-size:12.5px; color:var(--text-muted);">0.40% ≤ μ = 2.37% ≤ 3.50% (Rất hợp lý cho cột tầng 1)</div>
+                </div>
+                <span class="audit-badge badge-pass" id="col-chk-mu-badge">HỢP LÝ</span>
+              </div>
+
+              <!-- Check 3: Khoảng hở lọt lòng đầm dùi -->
+              <div class="audit-item">
+                <span class="audit-icon" id="col-chk-t-icon">✅</span>
+                <div class="audit-text">
+                  <b>3. Khoảng hở lọt lòng đổ bê tông (t):</b>
+                  <div id="col-chk-t-desc" style="font-size:12.5px; color:var(--text-muted);">t_min = 85 mm (≥ 50mm - Luồn lọt đầm dùi phi 50 tốt)</div>
+                </div>
+                <span class="audit-badge badge-pass" id="col-chk-t-badge">ĐẠT</span>
+              </div>
+
+              <!-- Check 4: Khoảng cách tối đa giữa các thanh -->
+              <div class="audit-item">
+                <span class="audit-icon" id="col-chk-smax-icon">✅</span>
+                <div class="audit-text">
+                  <b>4. Khoảng cách tim cốt thép dọc (s ≤ 400mm):</b>
+                  <div id="col-chk-smax-desc" style="font-size:12.5px; color:var(--text-muted);">s_max = 110 mm ≤ 400 mm (Không sợ phình nứt bê tông)</div>
+                </div>
+                <span class="audit-badge badge-pass" id="col-chk-smax-badge">ĐẠT</span>
+              </div>
+            </div>
+
+            <!-- OVERALL VERDICT -->
+            <div id="col-verdict" class="verdict-banner verdict-pass">
+              <span id="col-verdict-icon" style="font-size:20px;">🛡️</span>
+              <span id="col-verdict-text">KẾT LUẬN: Cột đối xứng hoàn hảo, hàm lượng tối ưu, đảm bảo chịu nén uốn và thi công thuận lợi!</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: Realtime CAD/SVG Visualizer Cột -->
+        <div>
+          <div class="vis-pane">
+            <div class="vis-toolbar">
+              <h3 style="font-size:16px; font-weight:bold; color:var(--primary); display:flex; align-items:center; gap:8px;">
+                <span>📐</span> Bản Vẽ Mặt Cắt Tiết Diện Cột (Chuẩn Kỹ Thuật CAD)
+              </h3>
+              <span id="col-vis-dim" style="font-size:13px; font-weight:bold; background:#e0e7ff; color:#4338ca; padding:3px 10px; border-radius:6px;">200 x 300 mm</span>
+            </div>
+
+            <!-- CAD Display Controls -->
+            <div class="cad-controls" style="width:100%; margin-bottom:10px;">
+              <label><input type="checkbox" id="col-chk-dim" checked onchange="calculateColumn()"> Hiện kích thước CAD</label>
+              <label><input type="checkbox" id="col-chk-leader" checked onchange="calculateColumn()"> Hiện ghi chú thép</label>
+              <label><input type="checkbox" id="col-chk-axis" checked onchange="calculateColumn()"> Hiện trục tim</label>
+            </div>
+
+            <!-- Dynamic SVG Container (Zero-Collision Quadrant Layout) -->
+            <div class="svg-container" id="col-svg-wrapper">
+              <svg id="col-svg" viewBox="0 0 700 520" preserveAspectRatio="xMidYMid meet"></svg>
+            </div>
+
+            <div class="stats-grid" style="width:100%; margin-top:14px;">
+              <div class="stat-box">
+                <div class="stat-label">Sức chịu nén đúng tâm sơ bộ Ngh</div>
+                <div class="stat-value" id="col-ngh">932.4 <span class="stat-unit">kN</span></div>
+                <div style="font-size:11.5px; color:#16a34a; font-weight:bold;">Đảm bảo chịu nén công trình</div>
+                <div class="stat-sub" id="col-ngh-ton">Tương đương ≈ 95.1 tấn</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-label">Tổng diện tích Ast chọn</div>
+                <div class="stat-value" id="col-ast-act-val">14.20 <span class="stat-unit">cm²</span></div>
+                <div id="col-ast-eval" style="font-size:11.5px; color:#16a34a; font-weight:bold;">Thỏa Ast_yc = 13.80 cm²</div>
+                <div class="stat-sub" id="col-ast-mm-sub">Tương đương 1,420 mm²</div>
+              </div>
+            </div>
+
+            <div class="vis-actions">
+              <button class="btn btn-primary" onclick="addColumnToProject()">
+                <span>➕</span> Thêm Cột Vào Dự Án
+              </button>
+              <button class="btn btn-outline" onclick="window.print()">
+                <span>🖨️</span> In Bản Vẽ
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 3: BẢN SÀN (SLAB) -->
+    <!-- ======================================================== -->
+    <section id="slab-tab" class="tab-content">
+      <div class="calc-layout">
+        
+        <!-- Left: Inputs & Computed Values -->
+        <div>
+          <!-- Card: Bản sàn -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title"><span>🔲</span> Nhập Chiều Dày Bản Sàn hs</h2>
+              <span class="badge" style="background:#fef3c7; color:#b45309;">Chỉ Nhập Chiều Dày hs</span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="slab-name">Ký Hiệu Ô Sàn</label>
+                <input type="text" id="slab-name" class="input-field" value="Ô Sàn S1 (Phòng Khách)">
+              </div>
+              <div class="form-group">
+                <label for="slab-pos">Vị Trí Cốt Thép</label>
+                <select id="slab-pos" class="input-field" onchange="updateSlabPos()">
+                  <option value="Nhịp" selected>Thép Nhịp (Lớp dưới chịu uốn dương)</option>
+                  <option value="Gối">Thép Mũ Gối (Lớp trên chịu uốn âm)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="slab-hs">Chiều Dày Sàn hs (mm)</label>
+                <input type="number" id="slab-hs" class="input-field" value="120" step="5" min="80" max="300" oninput="onSlabDimensionChange()">
+              </div>
+              <div class="form-group">
+                <label for="slab-steel">Loại Thép Sàn</label>
+                <select id="slab-steel" class="input-field" onchange="calculateSlab()">
+                  <option value="CB240-T" selected>CB240-T / AI (Thép trơn)</option>
+                  <option value="CB300-V">CB300-V / AII (Thép gờ)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Quick slab chips -->
+            <label style="margin-top:4px;">Chiều dày sàn thông dụng:</label>
+            <div class="quick-chips">
+              <span class="chip" onclick="setSlabHs(100)">100 mm (Mái, Ban công, WC)</span>
+              <span class="chip" onclick="setSlabHs(120)">120 mm (Phòng ngủ, khách L=5m)</span>
+              <span class="chip" onclick="setSlabHs(140)">140 mm (Sàn nhịp 6m)</span>
+              <span class="chip" onclick="setSlabHs(150)">150 mm (Sàn lớn)</span>
+            </div>
+
+            <div class="form-group" style="margin-top:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label for="slab-mu">Hàm Lượng Giả Thuyết μ_s (%)</label>
+                <span id="slab-mu-txt" class="slider-val">0.35%</span>
+              </div>
+              <div class="slider-container">
+                <input type="range" id="slab-mu" min="0.10" max="1.50" step="0.02" value="0.35" oninput="onSlabMuSlider()">
+              </div>
+              <div class="mu-viz-bar">
+                <div class="zone zone-danger-low"></div>
+                <div class="zone zone-ok"></div>
+                <div class="zone zone-warn"></div>
+                <div class="zone zone-danger-high"></div>
+                <div class="marker" id="slab-mu-marker"></div>
+              </div>
+              <div class="mu-viz-labels">
+                <span>μ_min (0.1%)</span>
+                <span>μ_max (0.9%)</span>
+              </div>
+              <div class="quick-chips" style="margin-top:10px;">
+                <span class="chip" onclick="setSlabMu(0.30)">Nhịp phương dài: 0.30%</span>
+                <span class="chip" onclick="setSlabMu(0.40)">Nhịp phương ngắn: 0.40%</span>
+                <span class="chip" onclick="setSlabMu(0.60)">Gối dầm: 0.60%</span>
+                <span class="chip" onclick="setSlabMu(0.75)">Gối nhịp lớn: 0.75%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card: Bố trí cốt thép sàn & Tùy chỉnh -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title"><span>📊</span> Bố Trí Cốt Thép Bản Sàn</h2>
+              <div style="font-size:13px; color:var(--text-muted);">As_yc = <span id="slab-as-req-badge" style="font-weight:bold; color:#d97706;">350 mm²/m (3.50 cm²/m)</span></div>
+            </div>
+
+            <!-- SUB-MODE SWITCH: AUTO vs CUSTOM -->
+            <div class="mode-switch-bar">
+              <button id="slab-btn-mode-auto" class="mode-switch-btn active" onclick="setSlabMode('auto')">
+                <span>⚡</span> Gợi Ý Tự Động (Auto)
+              </button>
+              <button id="slab-btn-mode-custom" class="mode-switch-btn" onclick="setSlabMode('custom')">
+                <span>🛠️</span> Tùy Chỉnh Bước & Phi Thép
+              </button>
+            </div>
+
+            <!-- MODE 1: AUTO SUGGESTIONS -->
+            <div id="slab-auto-panel">
+              <label style="margin-bottom:8px; display:block;">Đề xuất phương án rải thép sàn tự động:</label>
+              <div id="slab-rebar-options">
+                <!-- Rendered by JS -->
+              </div>
+              <button class="btn btn-outline" style="width:100%; margin-top:8px;" onclick="loadAutoToCustomSlab()">
+                <span>✏️</span> Chuyển Phương Án Đang Chọn Sang Bảng Tùy Chỉnh
+              </button>
+            </div>
+
+            <!-- MODE 2: ADVANCED CUSTOMIZER -->
+            <div id="slab-custom-panel" style="display:none;">
+              <div class="custom-box">
+                <div class="custom-box-title">
+                  <span>📐 Tùy Chỉnh Lưới Thép Rải Sàn</span>
+                  <span id="slab-custom-as-disp" style="color:var(--primary); font-weight:bold;">419 mm²/m (4.19 cm²/m)</span>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Đường kính thanh (Phi)</label>
+                    <select id="slab-c-phi" class="input-field" onchange="runSlabCustomAudit()">
+                      <option value="6">Phi 6 (Thép trơn)</option>
+                      <option value="8" selected>Phi 8 (Khuyên dùng)</option>
+                      <option value="10">Phi 10 (Gối hoặc nhịp lớn)</option>
+                      <option value="12">Phi 12 (Sàn dày)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Khoảng cách rải a (mm)</label>
+                    <select id="slab-c-step" class="input-field" onchange="runSlabCustomAudit()">
+                      <option value="80">a = 80 mm</option>
+                      <option value="100">a = 100 mm (Gối mômen lớn)</option>
+                      <option value="120" selected>a = 120 mm (Rất phổ biến)</option>
+                      <option value="150">a = 150 mm (Tiêu chuẩn)</option>
+                      <option value="180">a = 180 mm</option>
+                      <option value="200">a = 200 mm (Giới hạn tối đa TCVN)</option>
+                      <option value="250">a = 250 mm (Quá thưa)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BẢNG CHẨN ĐOÁN & KIỂM TRA HỢP LÝ SÀN -->
+            <div class="audit-card">
+              <div class="audit-title">
+                <span>🔍 KẾT QUẢ KIỂM ĐỊNH KỸ THUẬT SÀN (TCVN 5574:2018)</span>
+                <span id="slab-audit-mode-lbl" style="font-size:12px; color:var(--text-muted);">Chế độ: Gợi ý</span>
+              </div>
+
+              <!-- Check 1: Khả năng chịu lực -->
+              <div class="audit-item">
+                <span class="audit-icon" id="slab-chk-as-icon">✅</span>
+                <div class="audit-text">
+                  <b>1. Diện tích cốt thép (As chọn vs As_yc):</b>
+                  <div id="slab-chk-as-desc" style="font-size:12.5px; color:var(--text-muted);">As = 419 mm²/m ≥ As_yc = 350 mm²/m (Thỏa mãn)</div>
+                </div>
+                <span class="audit-badge badge-pass" id="slab-chk-as-badge">ĐẠT CHUẨN</span>
+              </div>
+
+              <!-- Check 2: Hàm lượng cốt thép -->
+              <div class="audit-item">
+                <span class="audit-icon" id="slab-chk-mu-icon">✅</span>
+                <div class="audit-text">
+                  <b>2. Hàm lượng cốt thép μ_s:</b>
+                  <div id="slab-chk-mu-desc" style="font-size:12.5px; color:var(--text-muted);">μ = 0.42% ≥ μ_min = 0.10% (Hợp lý kinh tế)</div>
+                </div>
+                <span class="audit-badge badge-pass" id="slab-chk-mu-badge">HỢP LÝ</span>
+              </div>
+
+              <!-- Check 3: Bước đan rải a -->
+              <div class="audit-item">
+                <span class="audit-icon" id="slab-chk-step-icon">✅</span>
+                <div class="audit-text">
+                  <b>3. Quy chuẩn bước đan rải thép (a ≤ 1.5h và ≤ 200mm):</b>
+                  <div id="slab-chk-step-desc" style="font-size:12.5px; color:var(--text-muted);">a = 120 mm ≤ 180 mm & ≤ 200 mm (Đạt chuẩn)</div>
+                </div>
+                <span class="audit-badge badge-pass" id="slab-chk-step-badge">ĐẠT</span>
+              </div>
+            </div>
+
+            <!-- OVERALL VERDICT -->
+            <div id="slab-verdict" class="verdict-banner verdict-pass">
+              <span id="slab-verdict-icon" style="font-size:20px;">🛡️</span>
+              <span id="slab-verdict-text">KẾT LUẬN: Phương án rải thép bản sàn ĐẠT CHUẨN KỸ THUẬT, không bị nứt và chịu uốn tốt!</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: Realtime CAD/SVG Visualizer Sàn -->
+        <div>
+          <div class="vis-pane">
+            <div class="vis-toolbar">
+              <h3 style="font-size:16px; font-weight:bold; color:var(--primary); display:flex; align-items:center; gap:8px;">
+                <span>📐</span> Bản Vẽ Mặt Cắt Chi Tiết Bản Sàn (Chuẩn Kỹ Thuật CAD)
+              </h3>
+              <span id="slab-vis-dim" style="font-size:13px; font-weight:bold; background:#fef3c7; color:#b45309; padding:3px 10px; border-radius:6px;">Dày hs = 120 mm</span>
+            </div>
+
+            <!-- CAD Display Controls -->
+            <div class="cad-controls" style="width:100%; margin-bottom:10px;">
+              <label><input type="checkbox" id="slab-chk-dim" checked onchange="calculateSlab()"> Hiện kích thước CAD</label>
+              <label><input type="checkbox" id="slab-chk-leader" checked onchange="calculateSlab()"> Hiện ghi chú thép</label>
+            </div>
+
+            <!-- Dynamic SVG Container (Zero-Collision Quadrant Layout) -->
+            <div class="svg-container" id="slab-svg-wrapper">
+              <svg id="slab-svg" viewBox="0 0 700 520" preserveAspectRatio="xMidYMid meet"></svg>
+            </div>
+
+            <div class="stats-grid" style="width:100%; margin-top:14px;">
+              <div class="stat-box">
+                <div class="stat-label">Bước rải a</div>
+                <div class="stat-value" id="slab-step-val">120 <span class="stat-unit">mm</span></div>
+                <div id="slab-step-eval" style="font-size:11.5px; color:#16a34a; font-weight:bold;">Đảm bảo a ≤ 1.5h và ≤ 200mm</div>
+                <div class="stat-sub">Khoảng cách tim hai thanh liên tiếp</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-label">Hàm lượng thực tế μ_tt</div>
+                <div class="stat-value" id="slab-mu-tt">0.42 <span class="stat-unit">%</span></div>
+                <div id="slab-as-act-val" style="font-size:11.5px; color:var(--text-muted);">As chọn = 419 mm²/m</div>
+                <div class="stat-sub">Tương đương 4.19 cm²/m</div>
+              </div>
+            </div>
+
+            <div class="vis-actions">
+              <button class="btn btn-primary" onclick="addSlabToProject()">
+                <span>➕</span> Thêm Sàn Vào Dự Án
+              </button>
+              <button class="btn btn-outline" onclick="window.print()">
+                <span>🖨️</span> In Bản Vẽ
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 4: BẢNG TRA TCVN 5574:2018 -->
+    <!-- ======================================================== -->
+    <section id="standards-tab" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span>📘</span> BẢNG TRA CỨU TIÊU CHUẨN KẾT CẤU BÊ TÔNG CỐT THÉP (TCVN 5574:2018)</h2>
+        </div>
+
+        <h3 style="font-size:15.5px; margin: 16px 0 8px 0; color:var(--primary);">1. Chỉ tiêu cường độ tính toán của bê tông (MPa)</h3>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Cấp độ bền</th>
+                <th>Tương đương Mác</th>
+                <th>R<sub>b</sub> (Nén tính toán, MPa)</th>
+                <th>R<sub>bt</sub> (Kéo tính toán, MPa)</th>
+                <th>E<sub>b</sub> (Mô đun đàn hồi, GPa)</th>
+                <th>Ghi chú áp dụng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><b>B15</b></td><td>M200</td><td>8.5</td><td>0.75</td><td>24.0</td><td>Dùng cho lót móng, cấu kiện phụ</td></tr>
+              <tr style="background:#eff6ff; font-weight:bold; color:var(--primary);">
+                <td>B20 (Dự án)</td><td>M250</td><td>11.5</td><td>0.90</td><td>27.5</td><td>Công trình 3 tầng Vạn Kiến Khang</td>
+              </tr>
+              <tr><td><b>B25</b></td><td>M350</td><td>14.5</td><td>1.05</td><td>30.0</td><td>Phổ biến nhà cao tầng 5-15 tầng</td></tr>
+              <tr><td><b>B30</b></td><td>M400</td><td>17.0</td><td>1.15</td><td>32.5</td><td>Nhà cao tầng, dầm nhịp lớn</td></tr>
+              <tr><td><b>B35</b></td><td>M450</td><td>19.5</td><td>1.30</td><td>34.5</td><td>Cột chịu lực lớn, dầm chuyển</td></tr>
+              <tr><td><b>B40</b></td><td>M500</td><td>22.0</td><td>1.40</td><td>36.0</td><td>Cột tầng hầm siêu cao tầng</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="font-size:15.5px; margin: 24px 0 8px 0; color:var(--primary);">2. Chỉ tiêu cường độ của cốt thép theo TCVN 5574:2018 (MPa)</h3>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Nhóm cốt thép</th>
+                <th>Ký hiệu cũ</th>
+                <th>R<sub>s</sub> (Chịu kéo, MPa)</th>
+                <th>R<sub>sc</sub> (Chịu nén, MPa)</th>
+                <th>R<sub>sw</sub> (Đai đan, MPa)</th>
+                <th>Giới hạn chiều cao vùng nén ξ<sub>R</sub></th>
+                <th>Công dụng chính</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>CB240-T</b></td><td>AI / CI</td><td>210</td><td>210</td><td>170</td><td>0.614</td>
+                <td>Thép bản sàn, thép đai phi 6, 8</td>
+              </tr>
+              <tr style="background:#eff6ff; font-weight:bold; color:var(--primary);">
+                <td>CB300-V (Dự án)</td><td>AII / CII</td><td>280</td><td>280</td><td>225</td><td>0.571</td>
+                <td>Cốt dọc dầm, cột công trình 3 tầng</td>
+              </tr>
+              <tr>
+                <td><b>CB400-V</b></td><td>AIII / CIII</td><td>350</td><td>350</td><td>280</td><td>0.531</td>
+                <td>Cốt thép dọc chịu lực nhà cao tầng</td>
+              </tr>
+              <tr>
+                <td><b>CB500-V</b></td><td>AIV</td><td>435</td><td>400</td><td>300</td><td>0.493</td>
+                <td>Công trình quy mô lớn, cầu cảng</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="font-size:15.5px; margin: 24px 0 8px 0; color:var(--primary);">3. Bảng tra diện tích tiết diện cốt thép As (cm² và mm²)</h3>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Đường kính (Phi)</th>
+                <th>Trọng lượng (kg/m)</th>
+                <th>1 thanh</th>
+                <th>2 thanh</th>
+                <th>3 thanh</th>
+                <th>4 thanh</th>
+                <th>5 thanh</th>
+                <th>6 thanh</th>
+                <th>7 thanh</th>
+                <th>8 thanh</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><b>Phi 6</b></td><td>0.222</td><td>0.28 (28 mm²)</td><td>0.57 (57 mm²)</td><td>0.85 (85 mm²)</td><td>1.13</td><td>1.41</td><td>1.70</td><td>1.98</td><td>2.26</td></tr>
+              <tr><td><b>Phi 8</b></td><td>0.395</td><td>0.50 (50 mm²)</td><td>1.01 (101 mm²)</td><td>1.51 (151 mm²)</td><td>2.01</td><td>2.51</td><td>3.02</td><td>3.52</td><td>4.02</td></tr>
+              <tr><td><b>Phi 10</b></td><td>0.617</td><td>0.79 (79 mm²)</td><td>1.57 (157 mm²)</td><td>2.36 (236 mm²)</td><td>3.14</td><td>3.93</td><td>4.71</td><td>5.50</td><td>6.28</td></tr>
+              <tr><td><b>Phi 12</b></td><td>0.888</td><td>1.13 (113 mm²)</td><td>2.26 (226 mm²)</td><td>3.39 (339 mm²)</td><td>4.52</td><td>5.65</td><td>6.79</td><td>7.92</td><td>9.05</td></tr>
+              <tr><td><b>Phi 14</b></td><td>1.208</td><td>1.54 (154 mm²)</td><td>3.08 (308 mm²)</td><td>4.62 (462 mm²)</td><td>6.16</td><td>7.70</td><td>9.24</td><td>10.78</td><td>12.32</td></tr>
+              <tr style="background:#fefce8; font-weight:bold;"><td>Phi 16</td><td>1.578</td><td>2.01 (201 mm²)</td><td>4.02 (402 mm²)</td><td>6.03 (603 mm²)</td><td>8.04</td><td>10.05</td><td>12.06</td><td>14.07</td><td>16.08</td></tr>
+              <tr style="background:#eff6ff; font-weight:bold;"><td>Phi 18</td><td>1.998</td><td>2.54 (254 mm²)</td><td>5.09 (509 mm²)</td><td>7.63 (763 mm²)</td><td>10.18</td><td>12.72</td><td>15.27</td><td>17.81</td><td>20.36</td></tr>
+              <tr style="background:#fefce8; font-weight:bold;"><td>Phi 20</td><td>2.466</td><td>3.14 (314 mm²)</td><td>6.28 (628 mm²)</td><td>9.42 (942 mm²)</td><td>12.57</td><td>15.71</td><td>18.85</td><td>21.99</td><td>25.13</td></tr>
+              <tr><td><b>Phi 22</b></td><td>2.984</td><td>3.80 (380 mm²)</td><td>7.60 (760 mm²)</td><td>11.40</td><td>15.21</td><td>19.01</td><td>22.81</td><td>26.61</td><td>30.41</td></tr>
+              <tr><td><b>Phi 25</b></td><td>3.853</td><td>4.91 (491 mm²)</td><td>9.82 (982 mm²)</td><td>14.73</td><td>19.63</td><td>24.54</td><td>29.45</td><td>34.36</td><td>39.27</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 5: DANH MỤC DỰ ÁN & XUẤT EXCEL -->
+    <!-- ======================================================== -->
+    <section id="project-tab" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span>📋</span> DANH MỤC CẤU KIỆN ĐÃ CHỌN CỦA DỰ ÁN</h2>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-primary" onclick="exportToCSV()">
+              <span>📥</span> Xuất Danh Mục (Excel/CSV)
+            </button>
+            <button class="btn btn-outline" onclick="clearProjectList()">
+              <span>🗑️</span> Xóa Toàn Bộ
+            </button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table id="project-table">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Loại cấu kiện</th>
+                <th>Ký hiệu</th>
+                <th>Vị trí</th>
+                <th>Tiết diện</th>
+                <th>As yêu cầu</th>
+                <th>Cốt thép chọn</th>
+                <th>As chọn</th>
+                <th>Hàm lượng μ (%)</th>
+                <th>Đánh giá TCVN</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody id="project-table-body">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+          <div id="project-empty" style="text-align:center; padding:30px; color:var(--text-muted);">
+            Chưa có cấu kiện nào trong danh mục. Hãy chuyển sang các Tab Dầm, Cột, Sàn và bấm "Thêm vào dự án".
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 6: HƯỚNG DẪN SỬ DỤNG & LƯU Ý KỸ THUẬT (MỚI) -->
+    <!-- ======================================================== -->
+    <section id="guide-tab" class="tab-content">
+      <div class="guide-section">
+        <h2 class="guide-title">
+          <span>🚀</span> QUY TRÌNH 6 BƯỚC SỬ DỤNG CÔNG CỤ THIẾT KẾ & GIẢ THUYẾT CỐT THÉP
+        </h2>
+        
+        <div class="guide-step-grid">
+          <div class="guide-step-card">
+            <div class="guide-step-num">BƯỚC 1</div>
+            <div class="guide-step-name">Chọn cấu kiện & vị trí</div>
+            <p style="font-size:13.5px; color:#475569;">Chọn Tab <b>Dầm, Cột</b> hoặc <b>Bản Sàn</b>. Chọn vị trí làm việc cụ thể: Gối (chịu mômen âm) hoặc Nhịp (chịu mômen dương); Tầng 1 (tải lớn) hay Tầng trên.</p>
+          </div>
+
+          <div class="guide-step-card">
+            <div class="guide-step-num">BƯỚC 2</div>
+            <div class="guide-step-name">Nhập kích thước hình học</div>
+            <p style="font-size:13.5px; color:#475569;">Chỉ cần nhập kích thước tiết diện thực tế <b><i>b</i> × <i>h</i></b> (Dầm, Cột) hoặc chiều dày <b><i>h</i><sub>s</sub></b> (Bản sàn). Công cụ tự động tính toán chiều cao làm việc <i>h</i><sub>0</sub> và diện tích bê tông <i>A</i><sub>b</sub>.</p>
+          </div>
+
+          <div class="guide-step-card">
+            <div class="guide-step-num">BƯỚC 3</div>
+            <div class="guide-step-name">Chọn hàm lượng sơ bộ μ</div>
+            <p style="font-size:13.5px; color:#475569;">Kéo thanh trượt hoặc nhấp vào các nút gợi ý nhanh theo kinh nghiệm kỹ sư kết cấu (Dầm: 1.2% - 1.5%; Cột: 2.0% - 2.8%; Sàn: 0.35% - 0.60%).</p>
+          </div>
+
+          <div class="guide-step-card">
+            <div class="guide-step-num">BƯỚC 4</div>
+            <div class="guide-step-name">Chọn hoặc Tùy chỉnh thép</div>
+            <p style="font-size:13.5px; color:#475569;">Chọn nhanh phương án máy đề xuất, hoặc bấm <b>"Tùy Chỉnh Nâng Cao"</b> để tự do đổi số lượng thanh, cấp đường kính Φ cho từng lớp, điều chỉnh bước đai.</p>
+          </div>
+
+          <div class="guide-step-card">
+            <div class="guide-step-num">BƯỚC 5</div>
+            <div class="guide-step-name">Kiểm tra chẩn đoán TCVN</div>
+            <p style="font-size:13.5px; color:#475569;">Quan sát thẻ <b>Kiểm định TCVN</b>: Đạt khả năng chịu lực? Hàm lượng nằm trong [μ<sub>min</sub>, μ<sub>max</sub>]? Khoảng hở <i>t</i> ≥ 30 mm (Dầm) hoặc ≥ 50 mm (Cột)? Đạt tính đồng nhất?</p>
+          </div>
+
+          <div class="guide-step-card">
+            <div class="guide-step-num">BƯỚC 6</div>
+            <div class="guide-step-name">Lưu & Xuất báo cáo</div>
+            <p style="font-size:13.5px; color:#475569;">Bấm <b>"Thêm vào dự án"</b> để lưu trữ các cấu kiện. Chuyển sang Tab 5 để xem bảng tổng hợp dự án và tải về file bảng tính Excel/CSV hoặc In ấn trực tiếp.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h2 class="guide-title">
+          <span>⚠️</span> 7 NGUYÊN TẮC CỐT TỬ KHI BỐ TRÍ CỐT THÉP THEO TCVN 5574:2018
+        </h2>
+
+        <div class="rule-card">
+          <div class="rule-card-header">
+            <span>1.</span> Quy định về khoảng hở thông thủy (t) và đầm dùi bê tông
+          </div>
+          <p style="font-size:14px; color:#334155; line-height:1.6;">
+            • <b>Đối với Dầm:</b> Khoảng cách thông thủy giữa các thanh thép dọc cùng lớp không được nhỏ hơn đường kính thanh lớn nhất <i>d</i><sub>max</sub> và không nhỏ hơn: <b>25 mm</b> đối với cốt thép dưới (nhịp); <b>30 mm</b> đối với cốt thép trên (gối). Khi bố trí 2 lớp, khoảng cách giữa 2 lớp thanh phải ≥ 25 mm (dùng con kê hoặc thanh thép cữ Φ25).<br>
+            • <b>Đối với Cột:</b> Khoảng hở giữa các thanh thép dọc không được nhỏ hơn <i>d</i><sub>max</sub> và <b>bắt buộc ≥ 50 mm</b> (TCVN 5574:2018 Điều 10.3.1). Quy định này nhằm bảo đảm đầu đầm dùi Φ50 có thể luồn sâu xuống tận chân cột, chống triệt để hiện tượng rỗ tổ ong chân cột.
+          </p>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-header">
+            <span>2.</span> Tính đồng nhất về đường kính cốt thép trong cùng một tiết diện
+          </div>
+          <p style="font-size:14px; color:#334155; line-height:1.6;">
+            • Trong cùng một tiết diện cấu kiện chịu uốn hoặc nén, <b>không nên sử dụng quá 2 loại đường kính</b> cốt thép chịu lực.<br>
+            • Chênh lệch đường kính giữa 2 loại thanh không được vượt quá 2 đến 3 cấp đường kính (tối đa Δ<i>d</i> ≤ 4 mm).<br>
+            • <i>Ví dụ đạt chuẩn:</i> 2Φ18 + 2Φ20 (Δ<i>d</i> = 2 mm), 4Φ20 + 2Φ22 (Δ<i>d</i> = 2 mm).<br>
+            • <i>Ví dụ cấm kỵ:</i> 2Φ14 + 2Φ22 hoặc 2Φ16 + 2Φ25 (chênh lệch quá lớn dẫn đến phân bố ứng suất không đều và sai lệch khi uốn neo).
+          </p>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-header">
+            <span>3.</span> Quy tắc bố trí phân tầng lớp thép Dầm (Layer 1 & Layer 2)
+          </div>
+          <p style="font-size:14px; color:#334155; line-height:1.6;">
+            • <b>Số lượng thanh lớp 2 không được nhiều hơn lớp 1 (<i>n</i><sub>2</sub> ≤ <i>n</i><sub>1</sub>):</b> Tránh việc lớp trên che kín khoảng hở làm vữa bê tông không lọt xuống được đáy dầm.<br>
+            • Các thanh thép ở lớp 2 phải được đặt <b>thẳng hàng tim theo phương đứng</b> với các thanh ở lớp 1 để tạo khe hở liên tục từ trên xuống dưới cho đá bê tông 1×2 lọt qua.<br>
+            • Thanh thép có đường kính lớn hơn nên ưu tiên đặt ở lớp ngoài cùng (Lớp 1) để tăng tối đa cánh tay đòn nội lực <i>h</i><sub>0</sub>.
+          </p>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-header">
+            <span>4.</span> Giới hạn hàm lượng cốt thép hợp lý & kinh tế (μ)
+          </div>
+          <p style="font-size:14px; color:#334155; line-height:1.6;">
+            • <b>Dầm:</b> μ<sub>min</sub> = 0.10%; μ<sub>max</sub> = 2.34% (ứng với bê tông B20, CB300-V có ξ<sub>R</sub> = 0.571). <b>Vùng hàm lượng tối ưu kinh tế nhất là 0.8% ≤ μ ≤ 1.6%</b>. Nếu μ > 2.0%, dầm quá dày đặc thép, nguy cơ phá hoại giòn và khó đổ bê tông, nên tăng chiều cao dầm <i>h</i>. Nếu μ < 0.1%, cấu kiện bị phá hoại giòn như bê tông không cốt thép.<br>
+            • <b>Cột:</b> μ<sub>min</sub> = 0.40%; μ<sub>max</sub> = 3.50% (vùng nối chồng không quá 4.0%). Hàm lượng hợp lý cho nhà dân dụng 3-5 tầng là <b>1.8% ≤ μ ≤ 2.8%</b>.<br>
+            • <b>Bản sàn:</b> μ<sub>min</sub> = 0.10%; hợp lý trong khoảng <b>0.30% ≤ μ ≤ 0.70%</b>.
+          </p>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-header">
+            <span>5.</span> Quy chuẩn cốt thép đai và móc uốn kháng chấn 135°
+          </div>
+          <p style="font-size:14px; color:#334155; line-height:1.6;">
+            • Đường kính cốt thép đai Φ<sub>đai</sub> ≥ <i>d</i><sub>dọc</sub> / 4 và không nhỏ hơn 6 mm (nên dùng Φ6 hoặc Φ8).<br>
+            • Bước cốt đai cột trong đoạn nối cốt thép và đoạn đầu cột (chiều dài ≥ 500 mm hoặc ≥ <i>h</i><sub>cột</sub>) phải bố trí dày <b><i>s</i> = 100 mm</b>; đoạn giữa cột <i>s</i> = 200 mm (và không quá 15 <i>d</i><sub>dọc</sub>).<br>
+            • Cốt thép đai bắt buộc phải có <b>móc uốn 135°</b> với đoạn thẳng neo kéo dài ≥ 10Φ<sub>đai</sub> hoặc ≥ 70 mm để giữ chặt cốt dọc khi xảy ra động đất hoặc tải trọng dao động.
+          </p>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-header">
+            <span>6.</span> Khoảng cách tim cốt thép tối đa (<i>s</i><sub>max</sub> ≤ 400 mm)
+          </div>
+          <p style="font-size:14px; color:#334155; line-height:1.6;">
+            • Trong dầm và cột, khoảng cách tim giữa hai thanh cốt thép dọc cạnh nhau không được vượt quá <b>400 mm</b>. Nếu cạnh cột hoặc bề rộng dầm lớn hơn 400 mm, bắt buộc phải bố trí thêm các thanh thép cấu tạo ở giữa để chống phình nở và nứt dọc bê tông.<br>
+            • Trong dầm có chiều cao <i>h</i> ≥ 700 mm, bắt buộc phải đặt cốt thép cấu tạo dọc ở các mặt bên (thép mang tai/cốt cấu tạo) với khoảng cách theo chiều cao ≤ 400 mm và diện tích mỗi thanh ≥ 0.1% <i>A</i><sub>b</sub>.
+          </p>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-header">
+            <span>7.</span> Quy định về lớp bê tông bảo vệ (<i>a</i><sub>0</sub>)
+          </div>
+          <p style="font-size:14px; color:#334155; line-height:1.6;">
+            • <b>Bản sàn:</b> <i>a</i><sub>0</sub> ≥ 15 mm (khi <i>h</i><sub>s</sub> ≤ 100 mm) và ≥ 20 mm (khi <i>h</i><sub>s</sub> > 100 mm).<br>
+            • <b>Dầm và Cột:</b> <i>a</i><sub>0</sub> ≥ 25 mm (trong nhà khô ráo) và ≥ 30 mm (ngoài trời, ẩm ướt). Trong mọi trường hợp, chiều dày lớp bảo vệ không được nhỏ hơn đường kính thanh thép dọc lớn nhất (<i>a</i><sub>0</sub> ≥ <i>d</i><sub>max</sub>).
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 7: THỐNG KÊ KHỐI LƯỢNG THÉP (V3 NEW) -->
+    <!-- ======================================================== -->
+    <section id="weight-tab" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span>⚖️</span> THỐNG KÊ KHỐI LƯỢNG CỐT THÉP SƠ BỘ</h2>
+          <button class="btn btn-primary" onclick="calculateWeightSummary()">
+            <span>🔄</span> Cập Nhật Khối Lượng
+          </button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 20px 0;">
+          <div class="stat-box">
+            <div class="stat-label">Tổng cấu kiện</div>
+            <div class="stat-value" id="weight-total-items">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Tổng KL thép ước tính</div>
+            <div class="stat-value" id="weight-total-kg">0 <span class="stat-unit">kg</span></div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Dầm</div>
+            <div class="stat-value" id="weight-beam-kg">0 <span class="stat-unit">kg</span></div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Cột</div>
+            <div class="stat-value" id="weight-col-kg">0 <span class="stat-unit">kg</span></div>
+          </div>
+        </div>
+
+        <div class="formula-steps">
+          <div class="step-label">📐 Công thức ước tính khối lượng thép</div>
+          <div class="step-line">
+            <b>Khối lượng 1 cấu kiện</b> = A<sub>s</sub> (cm²) × L (m) × 0.0785 (kg/cm²/m)<br>
+            Trong đó: L<sub>dầm</sub> ≈ 4.0 m, L<sub>cột</sub> ≈ 3.2 m (chiều cao tầng điển hình)<br>
+            <i>Lưu ý: Đây là ước tính sơ bộ, chưa bao gồm thép đai, thép neo, nối chồng.</i>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Loại</th>
+                <th>Ký hiệu</th>
+                <th>Tiết diện</th>
+                <th>As chọn (cm²)</th>
+                <th>Chiều dài L (m)</th>
+                <th>KL thép (kg)</th>
+              </tr>
+            </thead>
+            <tbody id="weight-table-body">
+              <tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:20px;">Chưa có cấu kiện. Hãy thêm từ Tab 1-3 và quay lại đây.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- V3: Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- ======================================================== -->
+  <!-- JAVASCRIPT LOGIC ENGINE -->
+  <!-- ======================================================== -->
+  <script>
+    // --- DATABASE & COMBINATIONS ---
+    const BEAM_COMBOS = [
+      { name: "2 Phi 18 + 2 Phi 20", phi1: 20, n1: 2, phi2: 18, n2: 2, layers: 2, as: 11.37, desc: "2 lớp: Lớp 1 (2 Phi 20) + Lớp 2 (2 Phi 18), rất thông dụng", type: "dual" },
+      { name: "4 Phi 20 (2 lớp 2+2)", phi1: 20, n1: 2, phi2: 20, n2: 2, layers: 2, as: 12.57, desc: "2 lớp: 2 Phi 20 dưới + 2 Phi 20 trên, khoảng hở rộng", type: "uni" },
+      { name: "3 Phi 20 (1 lớp)", phi1: 20, n1: 3, phi2: 0, n2: 0, layers: 1, as: 9.42, desc: "1 lớp: 3 Phi 20 rải đều, phù hợp dầm b ≥ 200mm", type: "uni" },
+      { name: "2 Phi 18 + 2 Phi 16", phi1: 18, n1: 2, phi2: 16, n2: 2, layers: 2, as: 9.11, desc: "2 lớp: Lớp 1 (2 Phi 18) + Lớp 2 (2 Phi 16), kinh tế gối dầm phụ", type: "dual" },
+      { name: "3 Phi 18 (1 lớp)", phi1: 18, n1: 3, phi2: 0, n2: 0, layers: 1, as: 7.63, desc: "1 lớp: 3 Phi 18 rất đẹp cho nhịp dầm phụ D2-3", type: "uni" },
+      { name: "2 Phi 20 + 2 Phi 22", phi1: 22, n1: 2, phi2: 20, n2: 2, layers: 2, as: 13.89, desc: "2 lớp: Lớp 1 (2 Phi 22) + Lớp 2 (2 Phi 20), dầm chịu lực lớn", type: "dual" },
+      { name: "4 Phi 18 (2 lớp 2+2)", phi1: 18, n1: 2, phi2: 18, n2: 2, layers: 2, as: 10.18, desc: "2 lớp: 2 Phi 18 + 2 Phi 18, đồng nhất hoàn toàn", type: "uni" },
+      { name: "2 Phi 16 + 2 Phi 18", phi1: 18, n1: 2, phi2: 16, n2: 2, layers: 2, as: 9.11, desc: "2 lớp phối hợp 16 và 18 chuẩn kỹ thuật", type: "dual" },
+      { name: "2 Phi 16 (1 lớp)", phi1: 16, n1: 2, phi2: 0, n2: 0, layers: 1, as: 4.02, desc: "1 lớp: 2 Phi 16 cho nhịp phụ nhỏ", type: "uni" }
+    ];
+
+    const COL_COMBOS = [
+      { name: "4 Phi 18 + 2 Phi 16", phi_corner: 18, n_corner: 4, phi_h: 16, n_h: 1, phi_b: 0, n_b: 0, total_n: 6, as: 14.20, desc: "6 thanh đối xứng: 4 góc Phi 18 + 2 mép h Phi 16 (Cột C1)", type: "dual" },
+      { name: "6 Phi 18 (Đồng nhất)", phi_corner: 18, n_corner: 4, phi_h: 18, n_h: 1, phi_b: 0, n_b: 0, total_n: 6, as: 15.27, desc: "6 thanh Phi 18 đồng nhất tuyệt đối, thi công rất tiện", type: "uni" },
+      { name: "4 Phi 22 + 2 Phi 20", phi_corner: 22, n_corner: 4, phi_h: 20, n_h: 1, phi_b: 0, n_b: 0, total_n: 6, as: 21.49, desc: "6 thanh: 4 góc Phi 22 + 2 mép h Phi 20 (Cột C2 tầng 1)", type: "dual" },
+      { name: "6 Phi 20 (Đồng nhất)", phi_corner: 20, n_corner: 4, phi_h: 20, n_h: 1, phi_b: 0, n_b: 0, total_n: 6, as: 18.85, desc: "6 thanh Phi 20 đồng nhất cho cột 250x300", type: "uni" },
+      { name: "4 Phi 20 (Đồng nhất góc)", phi_corner: 20, n_corner: 4, phi_h: 0, n_h: 0, phi_b: 0, n_b: 0, total_n: 4, as: 12.57, desc: "4 thanh Phi 20 ở 4 góc cho cột 200x200 hoặc 200x300 T2-T3", type: "uni" },
+      { name: "4 Phi 18 (Đồng nhất góc)", phi_corner: 18, n_corner: 4, phi_h: 0, n_h: 0, phi_b: 0, n_b: 0, total_n: 4, as: 10.18, desc: "4 thanh Phi 18 ở 4 góc cột tầng 3", type: "uni" },
+      { name: "8 Phi 18 (4 góc + 4 mép)", phi_corner: 18, n_corner: 4, phi_h: 18, n_h: 1, phi_b: 18, n_b: 1, total_n: 8, as: 20.36, desc: "8 thanh Phi 18 phân bố đều chu vi cột", type: "uni" },
+      { name: "8 Phi 20 (4 góc + 4 mép)", phi_corner: 20, n_corner: 4, phi_h: 20, n_h: 1, phi_b: 20, n_b: 1, total_n: 8, as: 25.13, desc: "8 thanh Phi 20 cho cột chịu lực nén lớn", type: "uni" }
+    ];
+
+    const SLAB_COMBOS = [
+      { name: "Phi 8 a120", phi: 8, step: 120, as: 419, desc: "Lưới thép Phi 8 bước 120mm (Thông dụng nhất nhịp sàn)", type: "uni" },
+      { name: "Phi 10 a100", phi: 10, step: 100, as: 785, desc: "Lưới thép Phi 10 bước 100mm (Thép mũ gối dầm chính)", type: "uni" },
+      { name: "Phi 8 a150", phi: 8, step: 150, as: 335, desc: "Lưới thép Phi 8 bước 150mm (Nhịp dài hoặc sàn mái)", type: "uni" },
+      { name: "Phi 10 a120", phi: 10, step: 120, as: 654, desc: "Lưới thép Phi 10 bước 120mm (Mũ gối dầm phụ)", type: "uni" },
+      { name: "Phi 6 a100", phi: 6, step: 100, as: 283, desc: "Lưới thép Phi 6 bước 100mm (Bản sàn dày 80-100mm)", type: "uni" },
+      { name: "Phi 6 a120", phi: 6, step: 120, as: 236, desc: "Lưới thép Phi 6 bước 120mm (Thép cấu tạo phân bố)", type: "uni" },
+      { name: "Phi 8 a100", phi: 8, step: 100, as: 503, desc: "Lưới thép Phi 8 bước 100mm (Gối sàn nhịp vừa)", type: "uni" },
+      { name: "Phi 10 a150", phi: 10, step: 150, as: 524, desc: "Lưới thép Phi 10 bước 150mm (Nhịp sàn khẩu độ 5-6m)", type: "uni" }
+    ];
+
+    // Current State
+    let currentBeamMode = 'auto';
+    let currentSelectedBeamRebar = BEAM_COMBOS[0];
+
+    let currentColMode = 'auto';
+    let currentSelectedColRebar = COL_COMBOS[0];
+
+    let currentSlabMode = 'auto';
+    let currentSelectedSlabRebar = SLAB_COMBOS[0];
+
+    let projectItems = [];
+
+    function barArea(phi_mm) {
+      return (Math.PI * Math.pow(phi_mm / 10, 2)) / 4;
+    }
+
+    // TAB SWITCH
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+      const targetBtn = document.getElementById('btn-tab-' + tabId);
+      if(targetBtn) targetBtn.classList.add('active');
+      
+      const targetTab = document.getElementById(tabId + '-tab');
+      if(targetTab) targetTab.classList.add('active');
+
+      // The tab is now 'display: block' thanks to classList.add('active').
+      // Modern browsers update the CSSOM synchronously here, so bounding boxes and SVG renders
+      // will execute correctly without any setTimeout hack.
+      if (tabId === 'beam') calculateBeam();
+      if (tabId === 'column') calculateColumn();
+      if (tabId === 'slab') calculateSlab();
+      if (tabId === 'weight') calculateWeightSummary();
+    }
+
+    // ========================================================
+    // --- V3 UTILITY FUNCTIONS ---
+    // ========================================================
+    function toggleDarkMode() {
+      const body = document.body;
+      const isDark = body.getAttribute('data-theme') === 'dark';
+      if(isDark) {
+        body.removeAttribute('data-theme');
+        document.getElementById('dark-toggle').innerText = '🌙';
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        document.getElementById('dark-toggle').innerText = '☀️';
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    function showToast(msg, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.innerHTML = msg;
+      container.appendChild(toast);
+      
+      // Trigger animation
+      setTimeout(() => toast.classList.add('show'), 10);
+      
+      // Remove after 3s
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 350);
+      }, 3000);
+    }
+
+    function updateMuVizBar(val, min, max, markerId) {
+      const marker = document.getElementById(markerId);
+      if(!marker) return;
+      // Truncate to visual range 0 to 4% for bar mapping
+      const visualMax = 4.0;
+      let pct = (val / visualMax) * 100;
+      if (pct < 0) pct = 0;
+      if (pct > 100) pct = 100;
+      marker.style.left = `calc(${pct}% - 2px)`;
+    }
+
+    // Apply saved theme on load
+    window.addEventListener('DOMContentLoaded', () => {
+      if(localStorage.getItem('theme') === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        document.getElementById('dark-toggle').innerText = '☀️';
+      }
+    });
+
+    // ========================================================
+    // --- MODULE DẦM (BEAM) ---
+    // ========================================================
+    function setBeamMode(mode) {
+      currentBeamMode = mode;
+      document.getElementById('beam-btn-mode-auto').classList.toggle('active', mode === 'auto');
+      document.getElementById('beam-btn-mode-custom').classList.toggle('active', mode === 'custom');
+      document.getElementById('beam-auto-panel').style.display = mode === 'auto' ? 'block' : 'none';
+      document.getElementById('beam-custom-panel').style.display = mode === 'custom' ? 'block' : 'none';
+      document.getElementById('beam-audit-mode-lbl').innerText = mode === 'auto' ? 'Chế độ: Gợi ý tự động' : 'Chế độ: Tùy chỉnh nâng cao';
+
+      if (mode === 'custom') {
+        runBeamCustomAudit();
+      } else {
+        calculateBeam();
+      }
+    }
+
+    function loadAutoToCustomBeam() {
+      const combo = currentSelectedBeamRebar;
+      document.getElementById('beam-c-n1').value = combo.n1;
+      document.getElementById('beam-c-phi1').value = combo.phi1;
+      document.getElementById('beam-c-n2').value = combo.n2;
+      document.getElementById('beam-c-phi2').value = combo.phi2 || 18;
+      setBeamMode('custom');
+    }
+
+    function setBeamSize(b, h) {
+      document.getElementById('beam-b').value = b;
+      document.getElementById('beam-h').value = h;
+      onBeamDimensionChange();
+    }
+
+    function setBeamMu(val) {
+      document.getElementById('beam-mu').value = val;
+      document.getElementById('beam-mu-txt').innerText = val.toFixed(2) + "%";
+      calculateBeam();
+    }
+
+    function onBeamMuSlider() {
+      const val = parseFloat(document.getElementById('beam-mu').value);
+      document.getElementById('beam-mu-txt').innerText = val.toFixed(2) + "%";
+      calculateBeam();
+    }
+
+    function updateBeamPos() {
+      const pos = document.getElementById('beam-pos').value;
+      if (pos === "Gối") setBeamMu(1.45);
+      else setBeamMu(1.20);
+    }
+
+    function onBeamDimensionChange() {
+      if (currentBeamMode === 'auto') calculateBeam();
+      else runBeamCustomAudit();
+    }
+
+    function calculateBeam() {
+      const b = parseFloat(document.getElementById('beam-b').value) || 200;
+      const h = parseFloat(document.getElementById('beam-h').value) || 400;
+      const mu_yc = parseFloat(document.getElementById('beam-mu').value) || 1.45;
+      
+      // Update V3 Mu Viz Bar
+      updateMuVizBar(mu_yc, 0.1, 2.34, 'beam-mu-marker');
+
+      const a_est = h >= 400 ? 45 : 35;
+      const h0 = h - a_est;
+      const as_req_cm2 = (mu_yc / 100) * b * h0 / 100; // cm2
+      const as_req_mm2 = Math.round(as_req_cm2 * 100);
+
+      document.getElementById('beam-as-req-badge').innerText = `${as_req_cm2.toFixed(2)} cm² (${as_req_mm2} mm²)`;
+      document.getElementById('beam-vis-dim').innerText = `${b} x ${h} mm (${document.getElementById('beam-pos').value})`;
+
+      // Update Formula Steps (if the panel exists in HTML, otherwise we append it to the header dynamically)
+      let formulaPanel = document.getElementById('beam-formula-panel');
+      if (!formulaPanel) {
+        formulaPanel = document.createElement('div');
+        formulaPanel.id = 'beam-formula-panel';
+        formulaPanel.className = 'formula-steps';
+        const cardHeader = document.querySelector('#beam-tab .card-header').parentElement;
+        cardHeader.insertBefore(formulaPanel, cardHeader.children[1]);
+      }
+      formulaPanel.innerHTML = `
+        <div class="step-label">V3.0 Smart Calc: Tính toán diện tích As yêu cầu</div>
+        <div class="step-line">1. Chiều dày bảo vệ giả định: <i>a</i> = ${a_est} mm</div>
+        <div class="step-line">2. Chiều cao làm việc: <i>h<sub>0</sub></i> = h - a = ${h} - ${a_est} = <b>${h0} mm</b></div>
+        <div class="step-line">3. Diện tích thép: <i>A<sub>s,yc</sub></i> = (μ/100) × b × h<sub>0</sub> = (${mu_yc.toFixed(2)}/100) × ${b} × ${h0}</div>
+        <div class="step-result">↳ A<sub>s,yc</sub> = ${as_req_cm2.toFixed(2)} cm²</div>
+      `;
+
+      if (currentBeamMode === 'auto') {
+        const sortedCombos = [...BEAM_COMBOS].sort((a, b) => a.as - b.as);
+        const validCombos = sortedCombos.filter(c => c.as >= as_req_cm2);
+        const chosen = validCombos.length > 0 ? validCombos[0] : sortedCombos[sortedCombos.length - 1];
+
+        const opt1 = chosen;
+        const opt2 = sortedCombos.find(c => c.as >= as_req_cm2 && c.type === "uni") || chosen;
+        const opt3 = sortedCombos.find(c => c.as >= as_req_cm2 && c.as > chosen.as && c.name !== opt2.name) || chosen;
+
+        const displayList = [opt1];
+        if (opt2.name !== opt1.name) displayList.push(opt2);
+        if (opt3.name !== opt1.name && opt3.name !== opt2.name) displayList.push(opt3);
+
+        if (!currentSelectedBeamRebar || !displayList.some(c => c.name === currentSelectedBeamRebar.name)) {
+          currentSelectedBeamRebar = opt1;
+        }
+
+        renderBeamRebarCards(displayList, b, h0, as_req_cm2);
+        auditAndDrawBeam(b, h, h0, as_req_cm2, currentSelectedBeamRebar);
+      } else {
+        runBeamCustomAudit();
+      }
+    }
+
+    function renderBeamRebarCards(list, b, h0, as_req) {
+      const container = document.getElementById('beam-rebar-options');
+      container.innerHTML = "";
+
+      list.forEach((combo, idx) => {
+        const isSel = currentSelectedBeamRebar && currentSelectedBeamRebar.name === combo.name;
+        const mu_tt = (combo.as / (b * h0 / 100)) * 100;
+
+        let tagText = idx === 0 ? "TỐI ƯU ĐỀ XUẤT" : (combo.type === "uni" ? "ĐỒNG NHẤT 1 PHI" : "KINH TẾ 2 LỚP");
+        let tagClass = idx === 0 ? "tag-opt" : (combo.type === "uni" ? "tag-uni" : "tag-eco");
+
+        const card = document.createElement('div');
+        card.className = `rebar-card ${isSel ? 'selected' : ''}`;
+        card.onclick = () => {
+          currentSelectedBeamRebar = combo;
+          calculateBeam();
+        };
+
+        card.innerHTML = `
+          <div class="rebar-info">
+            <h4>${combo.name} <span class="rebar-tag ${tagClass}">${tagText}</span></h4>
+            <div class="rebar-sub">${combo.desc}</div>
+          </div>
+          <div class="rebar-as">
+            <div class="as-num">${combo.as.toFixed(2)} cm²</div>
+            <div class="as-mu">μ = ${mu_tt.toFixed(2)}% | ${Math.round(combo.as * 100)} mm²</div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function runBeamCustomAudit() {
+      const b = parseFloat(document.getElementById('beam-b').value) || 200;
+      const h = parseFloat(document.getElementById('beam-h').value) || 400;
+      const mu_yc = parseFloat(document.getElementById('beam-mu').value) || 1.45;
+
+      const n1 = parseInt(document.getElementById('beam-c-n1').value);
+      const phi1 = parseInt(document.getElementById('beam-c-phi1').value);
+      const n2 = parseInt(document.getElementById('beam-c-n2').value);
+      const phi2 = parseInt(document.getElementById('beam-c-phi2').value);
+      const phi_dai = parseInt(document.getElementById('beam-c-phidai').value);
+
+      const as_l1 = n1 * barArea(phi1);
+      const as_l2 = n2 > 0 ? n2 * barArea(phi2) : 0;
+      const total_as = as_l1 + as_l2;
+
+      document.getElementById('beam-custom-as-l1').innerText = `${as_l1.toFixed(2)} cm² (${Math.round(as_l1 * 100)} mm²)`;
+      document.getElementById('beam-custom-as-l2').innerText = `${as_l2.toFixed(2)} cm² (${Math.round(as_l2 * 100)} mm²)`;
+
+      const layers = n2 > 0 ? 2 : 1;
+      const a_est = layers === 2 ? 45 : 35;
+      const h0 = h - a_est;
+      const as_req_cm2 = (mu_yc / 100) * b * h0 / 100;
+      document.getElementById('beam-as-req-badge').innerText = `${as_req_cm2.toFixed(2)} cm² (${Math.round(as_req_cm2 * 100)} mm²)`;
+
+      let nameDesc = `${n1} Phi ${phi1}`;
+      if (n2 > 0) nameDesc += ` + ${n2} Phi ${phi2}`;
+
+      const customCombo = {
+        name: nameDesc,
+        phi1: phi1,
+        n1: n1,
+        phi2: phi2,
+        n2: n2,
+        layers: layers,
+        as: total_as,
+        phi_dai: phi_dai,
+        desc: `Tùy chỉnh: Lớp 1 (${n1} Phi ${phi1})` + (n2 > 0 ? ` + Lớp 2 (${n2} Phi ${phi2})` : ``)
+      };
+
+      currentSelectedBeamRebar = customCombo;
+      auditAndDrawBeam(b, h, h0, as_req_cm2, customCombo);
+    }
+
+    function auditAndDrawBeam(b, h, h0, as_req, combo) {
+      const cover = 25;
+      const phi_dai = combo.phi_dai || 8;
+      const pos = document.getElementById('beam-pos').value;
+      const isTop = (pos === "Gối");
+
+      // 1. As Check
+      const as_act = combo.as;
+      const diff_pct = ((as_act - as_req) / as_req) * 100;
+      let pass_as = false, warn_as = false;
+
+      if (as_act >= as_req) {
+        pass_as = true;
+        if (diff_pct > 28) warn_as = true;
+      }
+
+      document.getElementById('beam-as-act-val').innerHTML = `${as_act.toFixed(2)} <span class="stat-unit">cm²</span>`;
+      document.getElementById('beam-as-mm-sub').innerText = `Tương đương ${Math.round(as_act * 100)} mm² (Yêu cầu: ${Math.round(as_req * 100)} mm²)`;
+      document.getElementById('beam-as-eval').innerText = as_act >= as_req ? `Thỏa mãn As_yc = ${as_req.toFixed(2)} cm²` : `THIẾU THÉP! Cần thêm ${(as_req - as_act).toFixed(2)} cm²`;
+      document.getElementById('beam-as-eval').style.color = as_act >= as_req ? "#16a34a" : "#dc2626";
+
+      const icon_as = document.getElementById('beam-chk-as-icon');
+      const badge_as = document.getElementById('beam-chk-as-badge');
+      const desc_as = document.getElementById('beam-chk-as-desc');
+
+      if (!pass_as) {
+        icon_as.innerText = "❌";
+        badge_as.className = "audit-badge badge-fail";
+        badge_as.innerText = "KHÔNG ĐẠT";
+        desc_as.innerHTML = `As = <b>${as_act.toFixed(2)} cm² (${Math.round(as_act*100)} mm²)</b> < As_yc = <b>${as_req.toFixed(2)} cm²</b> (Thiếu ${Math.abs(diff_pct).toFixed(1)}% diện tích chịu lực)`;
+      } else if (warn_as) {
+        icon_as.innerText = "⚠️";
+        badge_as.className = "audit-badge badge-warn";
+        badge_as.innerText = "HƠI DƯ";
+        desc_as.innerHTML = `As = <b>${as_act.toFixed(2)} cm² (${Math.round(as_act*100)} mm²)</b> ≥ As_yc = <b>${as_req.toFixed(2)} cm²</b> (Dư +${diff_pct.toFixed(1)}% - Có thể giảm bớt phi để tiết kiệm)`;
+      } else {
+        icon_as.innerText = "✅";
+        badge_as.className = "audit-badge badge-pass";
+        badge_as.innerText = "ĐẠT CHUẨN";
+        desc_as.innerHTML = `As = <b>${as_act.toFixed(2)} cm² (${Math.round(as_act*100)} mm²)</b> ≥ As_yc = <b>${as_req.toFixed(2)} cm²</b> (Dư +${diff_pct.toFixed(1)}% - Cực kỳ tối ưu và kinh tế)`;
+      }
+
+      // 2. Mu Check
+      const mu_tt = (as_act / (b * h0 / 100)) * 100;
+      const icon_mu = document.getElementById('beam-chk-mu-icon');
+      const badge_mu = document.getElementById('beam-chk-mu-badge');
+      const desc_mu = document.getElementById('beam-chk-mu-desc');
+      let pass_mu = true;
+
+      if (mu_tt < 0.10) {
+        pass_mu = false;
+        icon_mu.innerText = "❌";
+        badge_mu.className = "audit-badge badge-fail";
+        badge_mu.innerText = "DƯỚI μ_MIN";
+        desc_mu.innerHTML = `μ = <b>${mu_tt.toFixed(2)}%</b> < μ_min = 0.10% (Nguy cơ phá hoại giòn không báo trước)`;
+      } else if (mu_tt > 2.34) {
+        pass_mu = false;
+        icon_mu.innerText = "❌";
+        badge_mu.className = "audit-badge badge-fail";
+        badge_mu.innerText = "VƯỢT μ_MAX";
+        desc_mu.innerHTML = `μ = <b>${mu_tt.toFixed(2)}%</b> > μ_max = 2.34% (Vượt giới hạn chiều cao vùng nén xi_R)`;
+      } else if (mu_tt > 1.80) {
+        icon_mu.innerText = "⚠️";
+        badge_mu.className = "audit-badge badge-warn";
+        badge_mu.innerText = "HÀM LƯỢNG CAO";
+        desc_mu.innerHTML = `0.10% ≤ μ = <b>${mu_tt.toFixed(2)}%</b> ≤ 2.34% (Khá cao, nên cân nhắc tăng tiết diện h dầm)`;
+      } else {
+        icon_mu.innerText = "✅";
+        badge_mu.className = "audit-badge badge-pass";
+        badge_mu.innerText = "HỢP LÝ";
+        desc_mu.innerHTML = `0.10% ≤ μ = <b>${mu_tt.toFixed(2)}%</b> ≤ 2.34% (Nằm trong dải tối ưu 0.80% - 1.80%)`;
+      }
+
+      // 3. Spacing Clear (t) Check
+      const n1 = combo.n1;
+      const phi1 = combo.phi1;
+      const t1 = n1 > 1 ? Math.round((b - 2 * cover - 2 * phi_dai - n1 * phi1) / (n1 - 1)) : (b - 2 * cover - 2 * phi_dai);
+      const req_t = isTop ? 30 : 25;
+
+      document.getElementById('beam-t-val').innerHTML = `${t1} <span class="stat-unit">mm</span>`;
+      const tEval = document.getElementById('beam-t-eval');
+      const icon_t = document.getElementById('beam-chk-t-icon');
+      const badge_t = document.getElementById('beam-chk-t-badge');
+      const desc_t = document.getElementById('beam-chk-t-desc');
+      let pass_t = true;
+
+      if (t1 < req_t || t1 < phi1) {
+        pass_t = false;
+        tEval.innerText = `❌ Nguy cơ rỗ bê tông (t = ${t1}mm < ${req_t}mm)`;
+        tEval.style.color = "#dc2626";
+        icon_t.innerText = "❌";
+        badge_t.className = "audit-badge badge-fail";
+        badge_t.innerText = "NGHẼN ĐÁ";
+        desc_t.innerHTML = `Khoảng hở t = <b>${t1} mm</b> < ${req_t} mm (Không lọt đá bê tông D_max=20mm, nguy cơ rỗ tổ ong)`;
+      } else if (t1 < req_t + 5) {
+        tEval.innerText = `⚠️ Khá sát giới hạn (t = ${t1}mm)`;
+        tEval.style.color = "#d97706";
+        icon_t.innerText = "⚠️";
+        badge_t.className = "audit-badge badge-warn";
+        badge_t.innerText = "SÁT GIỚI HẠN";
+        desc_t.innerHTML = `Khoảng hở t = <b>${t1} mm</b> xấp xỉ ngưỡng cho phép (${req_t} mm)`;
+      } else {
+        tEval.innerText = `✅ Đạt thông thủy (t = ${t1}mm ≥ ${req_t}mm)`;
+        tEval.style.color = "#16a34a";
+        icon_t.innerText = "✅";
+        badge_t.className = "audit-badge badge-pass";
+        badge_t.innerText = "ĐẠT";
+        desc_t.innerHTML = `Khoảng hở t = <b>${t1} mm</b> ≥ ${req_t} mm và ≥ Phi ${phi1} (Đầm dùi và đổ bê tông rất tốt)`;
+      }
+
+      // 4. Uniformity Check
+      const icon_uni = document.getElementById('beam-chk-uni-icon');
+      const badge_uni = document.getElementById('beam-chk-uni-badge');
+      const desc_uni = document.getElementById('beam-chk-uni-desc');
+      let pass_uni = true;
+
+      const n2 = combo.n2 || 0;
+      const phi2 = combo.phi2 || 0;
+
+      if (n2 > 0 && n2 > n1) {
+        pass_uni = false;
+        icon_uni.innerText = "❌";
+        badge_uni.className = "audit-badge badge-fail";
+        badge_uni.innerText = "LỖI LỚP THÉP";
+        desc_uni.innerHTML = `Số thanh Lớp 2 (${n2} thanh) > Lớp 1 (${n1} thanh) là sai quy cách cấu tạo!`;
+      } else if (n2 > 0 && Math.abs(phi1 - phi2) > 4) {
+        icon_uni.innerText = "⚠️";
+        badge_uni.className = "audit-badge badge-warn";
+        badge_uni.innerText = "CHÊNH PHI NHIỀU";
+        desc_uni.innerHTML = `Chênh lệch đường kính giữa Lớp 1 (Phi ${phi1}) và Lớp 2 (Phi ${phi2}) > 4mm`;
+      } else if (n2 > 0) {
+        icon_uni.innerText = "✅";
+        badge_uni.className = "audit-badge badge-pass";
+        badge_uni.innerText = "ĐỒNG NHẤT";
+        desc_uni.innerHTML = `Bố trí 2 lớp hợp lý (Lớp 1: ${n1} thanh, Lớp 2: ${n2} thanh), chênh lệch phi ≤ 4mm`;
+      } else {
+        icon_uni.innerText = "✅";
+        badge_uni.className = "audit-badge badge-pass";
+        badge_uni.innerText = "1 LỚP ĐẸP";
+        desc_uni.innerHTML = `Toàn bộ ${n1} thanh bố trí trên 1 lớp đồng nhất, thông thoáng bê tông`;
+      }
+
+      // OVERALL VERDICT
+      const verdictBanner = document.getElementById('beam-verdict');
+      const verdictIcon = document.getElementById('beam-verdict-icon');
+      const verdictText = document.getElementById('beam-verdict-text');
+
+      if (!pass_as || !pass_mu || !pass_t || !pass_uni) {
+        verdictBanner.className = "verdict-banner verdict-fail";
+        verdictIcon.innerText = "❌";
+        verdictText.innerText = "KẾT LUẬN: Phương án CHƯA HỢP LÝ! Cần chỉnh sửa các mục bị đánh dấu đỏ ở bảng kiểm tra.";
+      } else if (warn_as || t1 < req_t + 5) {
+        verdictBanner.className = "verdict-banner verdict-warn";
+        verdictIcon.innerText = "⚠️";
+        verdictText.innerText = "KẾT LUẬN: Phương án ĐẠT TIÊU CHUẨN nhưng có thể tối ưu hơn về kinh tế hoặc khoảng cách.";
+      } else {
+        verdictBanner.className = "verdict-banner verdict-pass";
+        verdictIcon.innerText = "🛡️";
+        verdictText.innerText = "KẾT LUẬN: Phương án bố trí cốt thép HỢP LÝ, đạt chuẩn chịu lực, khoảng hở và thi công TCVN 5574:2018!";
+      }
+
+      drawBeamSVGCAD(b, h, combo, isTop);
+    }
+
+    // ========================================================
+    // --- ZERO-COLLISION CAD ENGINE: DẦM ---
+    // ========================================================
+    function drawBeamSVGCAD(b, h, combo, isTop) {
+      const svg = document.getElementById('beam-svg');
+      svg.innerHTML = "";
+
+      const showDim = document.getElementById('beam-chk-dim').checked;
+      const showLeader = document.getElementById('beam-chk-leader').checked;
+      const showAxis = document.getElementById('beam-chk-axis').checked;
+
+      // ViewBox: 700 x 520, Center at (340, 260)
+      const maxDrawW = 260;
+      const maxDrawH = 280;
+      const scale = Math.min(maxDrawW / b, maxDrawH / h);
+      const drawW = b * scale;
+      const drawH = h * scale;
+
+      const centerX = 340;
+      const centerY = 260;
+      const startX = centerX - drawW / 2;
+      const startY = centerY - drawH / 2;
+
+      // Defs
+      const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+      defs.innerHTML = `
+        <pattern id="concrete-hatch" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="4" cy="4" r="0.8" fill="#94a3b8" />
+          <circle cx="14" cy="14" r="0.8" fill="#94a3b8" />
+          <polygon points="6,15 8,12 10,15" fill="#cbd5e1" opacity="0.6"/>
+          <polygon points="15,5 17,2 19,5" fill="#cbd5e1" opacity="0.6"/>
+        </pattern>
+        <radialGradient id="rebar-grad-red" cx="35%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#f87171" />
+          <stop offset="70%" stop-color="#dc2626" />
+          <stop offset="100%" stop-color="#7f1d1d" />
+        </radialGradient>
+        <radialGradient id="rebar-grad-orange" cx="35%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#fb923c" />
+          <stop offset="70%" stop-color="#ea580c" />
+          <stop offset="100%" stop-color="#7c2d12" />
+        </radialGradient>
+        <radialGradient id="rebar-grad-slate" cx="35%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#94a3b8" />
+          <stop offset="70%" stop-color="#475569" />
+          <stop offset="100%" stop-color="#1e293b" />
+        </radialGradient>
+      `;
+      svg.appendChild(defs);
+
+      // Centerline Axis
+      if (showAxis) {
+        const axisY = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        axisY.setAttribute("x1", centerX); axisY.setAttribute("y1", startY - 45);
+        axisY.setAttribute("x2", centerX); axisY.setAttribute("y2", startY + drawH + 50);
+        axisY.setAttribute("stroke", "#ef4444"); axisY.setAttribute("stroke-width", "1");
+        axisY.setAttribute("stroke-dasharray", "12, 3, 3, 3");
+        axisY.setAttribute("opacity", "0.6");
+        svg.appendChild(axisY);
+      }
+
+      // Concrete Body
+      const concrete = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      concrete.setAttribute("x", startX);
+      concrete.setAttribute("y", startY);
+      concrete.setAttribute("width", drawW);
+      concrete.setAttribute("height", drawH);
+      concrete.setAttribute("fill", "#f8fafc");
+      concrete.style.stroke = "var(--text-main)";
+      concrete.setAttribute("stroke-width", "2.5");
+      concrete.setAttribute("rx", "2");
+      svg.appendChild(concrete);
+
+      // Hatch
+      const hatch = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      hatch.setAttribute("x", startX);
+      hatch.setAttribute("y", startY);
+      hatch.setAttribute("width", drawW);
+      hatch.setAttribute("height", drawH);
+      hatch.setAttribute("fill", "url(#concrete-hatch)");
+      hatch.setAttribute("pointer-events", "none");
+      svg.appendChild(hatch);
+
+      // Stirrup
+      const cover = 25 * scale;
+      const stirrupW = drawW - 2 * cover;
+      const stirrupH = drawH - 2 * cover;
+      const stirrupX = startX + cover;
+      const stirrupY = startY + cover;
+
+      const stirrup = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      stirrup.setAttribute("x", stirrupX);
+      stirrup.setAttribute("y", stirrupY);
+      stirrup.setAttribute("width", stirrupW);
+      stirrup.setAttribute("height", stirrupH);
+      stirrup.setAttribute("fill", "none");
+      stirrup.style.stroke = "var(--secondary)";
+      stirrup.setAttribute("stroke-width", "2.5");
+      stirrup.setAttribute("rx", "6");
+      svg.appendChild(stirrup);
+
+      // 135 Hook at top-left
+      const hook = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+      const hookPts = `${stirrupX + 16},${stirrupY} ${stirrupX + 4},${stirrupY} ${stirrupX},${stirrupY + 4} ${stirrupX},${stirrupY + 16} ${stirrupX + 14},${stirrupY + 14}`;
+      hook.setAttribute("points", hookPts);
+      hook.setAttribute("fill", "none");
+      hook.style.stroke = "var(--primary)";
+      hook.setAttribute("stroke-width", "2.5");
+      svg.appendChild(hook);
+
+      // Rebar positions
+      const n1 = combo.n1;
+      const phi1 = combo.phi1;
+      const r1 = Math.max((phi1 / 2) * scale * 0.75, 5);
+
+      const rebarW1 = stirrupW - 2 * r1;
+      const gapX1 = n1 > 1 ? rebarW1 / (n1 - 1) : 0;
+      const layer1_y = isTop ? stirrupY + r1 + 1 : stirrupY + stirrupH - r1 - 1;
+
+      let l1FirstX = 0, l1LastX = 0;
+      for (let i = 0; i < n1; i++) {
+        const cx = (n1 === 1) ? centerX : stirrupX + r1 + i * gapX1;
+        if (i === 0) l1FirstX = cx;
+        if (i === n1 - 1) l1LastX = cx;
+
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", cx);
+        circle.setAttribute("cy", layer1_y);
+        circle.setAttribute("r", r1);
+        circle.setAttribute("fill", "url(#rebar-grad-red)");
+        circle.style.stroke = "var(--danger)";
+        circle.setAttribute("stroke-width", "1.5");
+        svg.appendChild(circle);
+      }
+
+      // Layer 2
+      const n2 = combo.n2 || 0;
+      let layer2_y = 0;
+      if (combo.layers === 2 && n2 > 0) {
+        const phi2 = combo.phi2 || phi1;
+        const r2 = Math.max((phi2 / 2) * scale * 0.75, 5);
+        const rebarW2 = stirrupW - 2 * r2;
+        const gapX2 = n2 > 1 ? rebarW2 / (n2 - 1) : 0;
+        layer2_y = isTop ? layer1_y + 26 * scale : layer1_y - 26 * scale;
+
+        for (let i = 0; i < n2; i++) {
+          const cx = (n2 === 1) ? centerX : stirrupX + r2 + i * gapX2;
+          const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          circle.setAttribute("cx", cx);
+          circle.setAttribute("cy", layer2_y);
+          circle.setAttribute("r", r2);
+          circle.setAttribute("fill", "url(#rebar-grad-orange)");
+          circle.style.stroke = "var(--warning)";
+          circle.setAttribute("stroke-width", "1.5");
+          svg.appendChild(circle);
+        }
+      }
+
+      // Hanger Bars
+      const hanger_y = isTop ? stirrupY + stirrupH - 7 : stirrupY + 7;
+      [stirrupX + 7, stirrupX + stirrupW - 7].forEach(cx => {
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", cx);
+        circle.setAttribute("cy", hanger_y);
+        circle.setAttribute("r", "4.5");
+        circle.setAttribute("fill", "url(#rebar-grad-slate)");
+        circle.setAttribute("stroke", "#1e293b");
+        circle.setAttribute("stroke-width", "1.2");
+        svg.appendChild(circle);
+      });
+
+      // CAD DIMENSIONS:
+      // Width b: ON TOP
+      if (showDim) {
+        const dimTopY = startY - 35;
+        drawCADDimension(svg, startX, dimTopY, startX + drawW, dimTopY, `b = ${b} mm`, true, "#1e293b", 13);
+
+        // Height h: STRICTLY ON THE LEFT (Completely avoiding collisions with leaders on the right!)
+        const dimLeftX = startX - 45;
+        drawCADDimension(svg, dimLeftX, startY, dimLeftX, startY + drawH, `h = ${h} mm`, false, "#1e293b", 13);
+      }
+
+      // Clear spacing t: DRAWN ON BOTTOM WITH DEDICATED EXTENSION LINES
+      if (n1 > 1) {
+        const t1 = Math.round((b - 50 - 16 - n1 * phi1) / (n1 - 1));
+        const clearX1 = l1FirstX + r1;
+        const clearX2 = l1FirstX + gapX1 - r1;
+        if (clearX2 > clearX1) {
+          const dimBotY = startY + drawH + 30;
+          drawCADDimension(svg, clearX1, dimBotY, clearX2, dimBotY, `t = ${t1} mm`, true, "#16a34a", 11);
+        }
+      }
+
+      // CAD LEADERS: STRICTLY ON THE RIGHT (Completely eliminating collisions with Left Height dimension!)
+      if (showLeader) {
+        const flagStartX = startX + drawW + 35;
+        const flagEndX = startX + drawW + 175;
+        let l1Text = `${n1} Phi ${phi1} (Lớp 1)`;
+        if (n2 > 0) l1Text = `${n1} Phi ${phi1} (L1) + ${n2} Phi ${combo.phi2} (L2)`;
+
+        if (isTop) {
+          // Gối: Main steel on Top (Red), Stirrup on Bottom-Right (Blue)
+          drawCADLeader(svg, l1LastX, layer1_y, flagStartX, startY + 20, flagEndX, startY + 20, l1Text, "red");
+          drawCADLeader(svg, stirrupX + stirrupW, startY + drawH - cover - 10, flagStartX, startY + drawH - 20, flagEndX, startY + drawH - 20, `Đai Phi ${combo.phi_dai || 8} a${combo.step_dai || 150}`, "blue");
+        } else {
+          // Nhịp: Stirrup on Top-Right (Blue), Main steel on Bottom-Right (Red)
+          drawCADLeader(svg, stirrupX + stirrupW, startY + cover + 10, flagStartX, startY + 20, flagEndX, startY + 20, `Đai Phi ${combo.phi_dai || 8} a${combo.step_dai || 150}`, "blue");
+          drawCADLeader(svg, l1LastX, layer1_y, flagStartX, startY + drawH - 20, flagEndX, startY + drawH - 20, l1Text, "red");
+        }
+      }
+    }
+
+    // ========================================================
+    // --- MODULE CỘT (COLUMN) ---
+    // ========================================================
+    function setColMode(mode) {
+      currentColMode = mode;
+      document.getElementById('col-btn-mode-auto').classList.toggle('active', mode === 'auto');
+      document.getElementById('col-btn-mode-custom').classList.toggle('active', mode === 'custom');
+      document.getElementById('col-auto-panel').style.display = mode === 'auto' ? 'block' : 'none';
+      document.getElementById('col-custom-panel').style.display = mode === 'custom' ? 'block' : 'none';
+      document.getElementById('col-audit-mode-lbl').innerText = mode === 'auto' ? 'Chế độ: Gợi ý tự động' : 'Chế độ: Tùy chỉnh nâng cao';
+
+      if (mode === 'custom') {
+        runColCustomAudit();
+      } else {
+        calculateColumn();
+      }
+    }
+
+    function loadAutoToCustomCol() {
+      const combo = currentSelectedColRebar;
+      document.getElementById('col-c-phi-corner').value = combo.phi_corner;
+      document.getElementById('col-c-nh').value = combo.n_h || 0;
+      document.getElementById('col-c-phi-h').value = combo.phi_h || 16;
+      document.getElementById('col-c-nb').value = combo.n_b || 0;
+      document.getElementById('col-c-phi-b').value = combo.phi_b || 16;
+      setColMode('custom');
+    }
+
+    function setColSize(b, h) {
+      document.getElementById('col-b').value = b;
+      document.getElementById('col-h').value = h;
+      onColDimensionChange();
+    }
+
+    function setColMu(val) {
+      document.getElementById('col-mu').value = val;
+      document.getElementById('col-mu-txt').innerText = val.toFixed(2) + "%";
+      calculateColumn();
+    }
+
+    function onColMuSlider() {
+      const val = parseFloat(document.getElementById('col-mu').value);
+      document.getElementById('col-mu-txt').innerText = val.toFixed(2) + "%";
+      calculateColumn();
+    }
+
+    function updateColFloor() {
+      const flr = document.getElementById('col-floor').value;
+      if (flr === "Tầng 1") setColMu(2.30);
+      else if (flr === "Tầng 2") setColMu(2.00);
+      else setColMu(1.50);
+    }
+
+    function onColDimensionChange() {
+      if (currentColMode === 'auto') calculateColumn();
+      else runColCustomAudit();
+    }
+
+    function calculateColumn() {
+      const b = parseFloat(document.getElementById('col-b').value) || 200;
+      const h = parseFloat(document.getElementById('col-h').value) || 300;
+      const mu_yc = parseFloat(document.getElementById('col-mu').value) || 2.30;
+      
+      // Update V3 Mu Viz Bar
+      updateMuVizBar(mu_yc, 0.1, 3.0, 'col-mu-marker');
+
+      const Ab = b * h / 100; // cm2
+      const ast_req = (mu_yc / 100) * Ab; // cm2
+      const ast_req_mm2 = Math.round(ast_req * 100);
+
+      document.getElementById('col-ast-req-badge').innerText = `${ast_req.toFixed(2)} cm² (${ast_req_mm2} mm²)`;
+      document.getElementById('col-vis-dim').innerText = `${b} x ${h} mm (${document.getElementById('col-floor').value})`;
+
+      // Update Formula Steps (V3)
+      // We will also estimate N_gh (Sức chịu tải sơ bộ)
+      const Rb = 11.5; // MPa (B20)
+      const Rsc = 280; // MPa (CB300-V)
+      const phi_buckling = 0.9;
+      const Ngh = phi_buckling * (Rb * (Ab * 100) + Rsc * (ast_req * 100)) / 1000; // kN
+
+      let formulaPanel = document.getElementById('col-formula-panel');
+      if (!formulaPanel) {
+        formulaPanel = document.createElement('div');
+        formulaPanel.id = 'col-formula-panel';
+        formulaPanel.className = 'formula-steps';
+        const cardHeader = document.querySelector('#column-tab .card-header').parentElement;
+        cardHeader.insertBefore(formulaPanel, cardHeader.children[1]);
+      }
+      formulaPanel.innerHTML = `
+        <div class="step-label">V3.0 Smart Calc: Diện tích A<sub>st</sub> và Sức chịu tải N<sub>gh</sub></div>
+        <div class="step-line">1. Diện tích bê tông: <i>A<sub>b</sub></i> = ${b} × ${h} / 100 = <b>${Ab} cm²</b></div>
+        <div class="step-line">2. Diện tích thép: <i>A<sub>st,yc</sub></i> = (μ/100) × A<sub>b</sub> = (${mu_yc.toFixed(2)}/100) × ${Ab}</div>
+        <div class="step-result">↳ A<sub>st,yc</sub> = ${ast_req.toFixed(2)} cm²</div>
+        <div class="step-line" style="margin-top:6px;">3. Ước tính sức chịu nén dọc trục (B20, CB300-V, φ=0.9):</div>
+        <div class="step-result" style="font-size:14px; color:var(--text-main);">↳ N<sub>gh</sub> ≈ ${Ngh.toFixed(0)} kN (${(Ngh/10).toFixed(1)} tấn)</div>
+      `;
+
+      if (currentColMode === 'auto') {
+        const sortedCombos = [...COL_COMBOS].sort((a, b) => a.as - b.as);
+        const validCombos = sortedCombos.filter(c => c.as >= ast_req);
+        const chosen = validCombos.length > 0 ? validCombos[0] : sortedCombos[sortedCombos.length - 1];
+
+        const opt1 = chosen;
+        const opt2 = sortedCombos.find(c => c.as >= ast_req && c.type === "uni") || chosen;
+        const opt3 = sortedCombos.find(c => c.as >= ast_req && c.total_n === 6 && c.name !== opt1.name) || chosen;
+
+        const displayList = [opt1];
+        if (opt2.name !== opt1.name) displayList.push(opt2);
+        if (opt3.name !== opt1.name && opt3.name !== opt2.name) displayList.push(opt3);
+
+        if (!currentSelectedColRebar || !displayList.some(c => c.name === currentSelectedColRebar.name)) {
+          currentSelectedColRebar = opt1;
+        }
+
+        renderColRebarCards(displayList, Ab);
+        auditAndDrawColumn(b, h, Ab, ast_req, currentSelectedColRebar);
+      } else {
+        runColCustomAudit();
+      }
+    }
+
+    function renderColRebarCards(list, Ab) {
+      const container = document.getElementById('col-rebar-options');
+      container.innerHTML = "";
+
+      list.forEach((combo, idx) => {
+        const isSel = currentSelectedColRebar && currentSelectedColRebar.name === combo.name;
+        const mu_tt = (combo.as / Ab) * 100;
+
+        let tagText = idx === 0 ? "TỐI ƯU ĐỀ XUẤT" : (combo.type === "uni" ? "ĐỒNG NHẤT 1 PHI" : "ĐỐI XỨNG 2 CẤP PHI");
+        let tagClass = idx === 0 ? "tag-opt" : (combo.type === "uni" ? "tag-uni" : "tag-eco");
+
+        const card = document.createElement('div');
+        card.className = `rebar-card ${isSel ? 'selected' : ''}`;
+        card.onclick = () => {
+          currentSelectedColRebar = combo;
+          calculateColumn();
+        };
+
+        card.innerHTML = `
+          <div class="rebar-info">
+            <h4>${combo.name} <span class="rebar-tag ${tagClass}">${tagText}</span></h4>
+            <div class="rebar-sub">${combo.desc}</div>
+          </div>
+          <div class="rebar-as">
+            <div class="as-num">${combo.as.toFixed(2)} cm²</div>
+            <div class="as-mu">μ = ${mu_tt.toFixed(2)}% | ${Math.round(combo.as * 100)} mm²</div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function runColCustomAudit() {
+      const b = parseFloat(document.getElementById('col-b').value) || 200;
+      const h = parseFloat(document.getElementById('col-h').value) || 300;
+      const mu_yc = parseFloat(document.getElementById('col-mu').value) || 2.30;
+
+      const phi_corner = parseInt(document.getElementById('col-c-phi-corner').value);
+      const nh = parseInt(document.getElementById('col-c-nh').value);
+      const phi_h = parseInt(document.getElementById('col-c-phi-h').value);
+      const nb = parseInt(document.getElementById('col-c-nb').value);
+      const phi_b = parseInt(document.getElementById('col-c-phi-b').value);
+      const phi_dai = parseInt(document.getElementById('col-c-phidai').value);
+
+      const as_corner = 4 * barArea(phi_corner);
+      const as_sideh = 2 * nh * barArea(phi_h);
+      const as_sideb = 2 * nb * barArea(phi_b);
+      const total_as = as_corner + as_sideh + as_sideb;
+      const total_n = 4 + 2 * nh + 2 * nb;
+
+      document.getElementById('col-custom-as-corner').innerText = `${as_corner.toFixed(2)} cm² (${Math.round(as_corner * 100)} mm²)`;
+      document.getElementById('col-custom-as-sideh').innerText = `${as_sideh.toFixed(2)} cm² (${Math.round(as_sideh * 100)} mm²)`;
+      document.getElementById('col-custom-as-sideb').innerText = `${as_sideb.toFixed(2)} cm² (${Math.round(as_sideb * 100)} mm²)`;
+
+      const Ab = b * h / 100;
+      const ast_req = (mu_yc / 100) * Ab;
+      document.getElementById('col-ast-req-badge').innerText = `${ast_req.toFixed(2)} cm² (${Math.round(ast_req * 100)} mm²)`;
+
+      let nameDesc = `4 Phi ${phi_corner}`;
+      if (nh > 0 && phi_h === phi_corner && nb === 0) {
+        nameDesc = `${total_n} Phi ${phi_corner} (Đồng nhất)`;
+      } else {
+        if (nh > 0) nameDesc += ` + ${2 * nh} Phi ${phi_h}`;
+        if (nb > 0) nameDesc += ` + ${2 * nb} Phi ${phi_b}`;
+      }
+
+      const customCombo = {
+        name: nameDesc,
+        phi_corner: phi_corner,
+        n_corner: 4,
+        phi_h: phi_h,
+        n_h: nh,
+        phi_b: phi_b,
+        n_b: nb,
+        total_n: total_n,
+        as: total_as,
+        phi_dai: phi_dai,
+        desc: `Tùy chỉnh: ${total_n} thanh đối xứng (${nameDesc})`
+      };
+
+      currentSelectedColRebar = customCombo;
+      auditAndDrawColumn(b, h, Ab, ast_req, customCombo);
+    }
+
+    function auditAndDrawColumn(b, h, Ab, ast_req, combo) {
+      const cover = 25;
+      const phi_dai = combo.phi_dai || 6;
+
+      // 1. Ast vs Ast_req
+      const ast_act = combo.as;
+      const diff_pct = ((ast_act - ast_req) / ast_req) * 100;
+      let pass_as = false, warn_as = false;
+
+      if (ast_act >= ast_req) {
+        pass_as = true;
+        if (diff_pct > 30) warn_as = true;
+      }
+
+      document.getElementById('col-ast-act-val').innerHTML = `${ast_act.toFixed(2)} <span class="stat-unit">cm²</span>`;
+      document.getElementById('col-ast-mm-sub').innerText = `Tương đương ${Math.round(ast_act * 100)} mm² (Yêu cầu: ${Math.round(ast_req * 100)} mm²)`;
+      document.getElementById('col-ast-eval').innerText = ast_act >= ast_req ? `Thỏa mãn Ast_yc = ${ast_req.toFixed(2)} cm²` : `THIẾU THÉP! Cần thêm ${(ast_req - ast_act).toFixed(2)} cm²`;
+      document.getElementById('col-ast-eval').style.color = ast_act >= ast_req ? "#16a34a" : "#dc2626";
+
+      const icon_as = document.getElementById('col-chk-as-icon');
+      const badge_as = document.getElementById('col-chk-as-badge');
+      const desc_as = document.getElementById('col-chk-as-desc');
+
+      if (!pass_as) {
+        icon_as.innerText = "❌";
+        badge_as.className = "audit-badge badge-fail";
+        badge_as.innerText = "KHÔNG ĐẠT";
+        desc_as.innerHTML = `Ast = <b>${ast_act.toFixed(2)} cm² (${Math.round(ast_act*100)} mm²)</b> < Ast_yc = <b>${ast_req.toFixed(2)} cm²</b> (Thiếu ${Math.abs(diff_pct).toFixed(1)}% chịu nén)`;
+      } else if (warn_as) {
+        icon_as.innerText = "⚠️";
+        badge_as.className = "audit-badge badge-warn";
+        badge_as.innerText = "HƠI DƯ";
+        desc_as.innerHTML = `Ast = <b>${ast_act.toFixed(2)} cm² (${Math.round(ast_act*100)} mm²)</b> ≥ Ast_yc = <b>${ast_req.toFixed(2)} cm²</b> (Dư +${diff_pct.toFixed(1)}%)`;
+      } else {
+        icon_as.innerText = "✅";
+        badge_as.className = "audit-badge badge-pass";
+        badge_as.innerText = "ĐẠT CHUẨN";
+        desc_as.innerHTML = `Ast = <b>${ast_act.toFixed(2)} cm² (${Math.round(ast_act*100)} mm²)</b> ≥ Ast_yc = <b>${ast_req.toFixed(2)} cm²</b> (Dư +${diff_pct.toFixed(1)}% - Tiết kiệm, rất chuẩn)`;
+      }
+
+      // 2. Mu Check
+      const mu_tt = (ast_act / Ab) * 100;
+      const icon_mu = document.getElementById('col-chk-mu-icon');
+      const badge_mu = document.getElementById('col-chk-mu-badge');
+      const desc_mu = document.getElementById('col-chk-mu-desc');
+      let pass_mu = true;
+
+      if (mu_tt < 0.40) {
+        pass_mu = false;
+        icon_mu.innerText = "❌";
+        badge_mu.className = "audit-badge badge-fail";
+        badge_mu.innerText = "DƯỚI μ_MIN";
+        desc_mu.innerHTML = `μ = <b>${mu_tt.toFixed(2)}%</b> < μ_min = 0.40% (Không đạt hàm lượng tối thiểu TCVN 5574:2018)`;
+      } else if (mu_tt > 3.50) {
+        pass_mu = false;
+        icon_mu.innerText = "❌";
+        badge_mu.className = "audit-badge badge-fail";
+        badge_mu.innerText = "VƯỢT μ_MAX";
+        desc_mu.innerHTML = `μ = <b>${mu_tt.toFixed(2)}%</b> > μ_max = 3.50% (Khó đổ bê tông và nghẽn mối nối)`;
+      } else {
+        icon_mu.innerText = "✅";
+        badge_mu.className = "audit-badge badge-pass";
+        badge_mu.innerText = "HỢP LÝ";
+        desc_mu.innerHTML = `0.40% ≤ μ = <b>${mu_tt.toFixed(2)}%</b> ≤ 3.50% (Phù hợp tuyệt đối với cột khung)`;
+      }
+
+      // 3. Clear spacing t in column
+      const nh_side = combo.n_h || 0;
+      const nb_side = combo.n_b || 0;
+      const max_d = Math.max(combo.phi_corner, combo.phi_h || 0, combo.phi_b || 0);
+
+      const nh_total = 2 + nh_side;
+      const th = nh_total > 1 ? Math.round((h - 2 * cover - 2 * phi_dai - 2 * combo.phi_corner - nh_side * (combo.phi_h || 16)) / (nh_total - 1)) : 100;
+
+      const nb_total = 2 + nb_side;
+      const tb = nb_total > 1 ? Math.round((b - 2 * cover - 2 * phi_dai - 2 * combo.phi_corner - nb_side * (combo.phi_b || 16)) / (nb_total - 1)) : 100;
+
+      const t_min_col = Math.min(th, tb);
+
+      const icon_t = document.getElementById('col-chk-t-icon');
+      const badge_t = document.getElementById('col-chk-t-badge');
+      const desc_t = document.getElementById('col-chk-t-desc');
+      let pass_t = true;
+
+      if (t_min_col < 50 || t_min_col < max_d) {
+        pass_t = false;
+        icon_t.innerText = "❌";
+        badge_t.className = "audit-badge badge-fail";
+        badge_t.innerText = "HẸP ĐẦM DÙI";
+        desc_t.innerHTML = `Khoảng hở lọt lòng t = <b>${t_min_col} mm</b> < 50 mm (Không luồn vừa đầu đầm dùi phi 50)`;
+      } else {
+        icon_t.innerText = "✅";
+        badge_t.className = "audit-badge badge-pass";
+        badge_t.innerText = "ĐẠT";
+        desc_t.innerHTML = `Khoảng hở t_min = <b>${t_min_col} mm</b> ≥ 50 mm & ≥ Phi ${max_d} (Đầm dùi rung bê tông dễ dàng)`;
+      }
+
+      // 4. Max spacing
+      const s_max_h = (h - 2 * cover) / (nh_total - 1);
+      const s_max_b = (b - 2 * cover) / (nb_total - 1);
+      const s_max = Math.round(Math.max(s_max_h, s_max_b));
+
+      const icon_smax = document.getElementById('col-chk-smax-icon');
+      const badge_smax = document.getElementById('col-chk-smax-badge');
+      const desc_smax = document.getElementById('col-chk-smax-desc');
+      let pass_smax = true;
+
+      if (s_max > 400) {
+        pass_smax = false;
+        icon_smax.innerText = "❌";
+        badge_smax.className = "audit-badge badge-fail";
+        badge_smax.innerText = "QUÁ THƯA";
+        desc_smax.innerHTML = `Khoảng cách s = <b>${s_max} mm</b> > 400 mm (Bắt buộc phải bố trí thêm cốt thép cấu tạo theo TCVN)`;
+      } else {
+        icon_smax.innerText = "✅";
+        badge_smax.className = "audit-badge badge-pass";
+        badge_smax.innerText = "ĐẠT";
+        desc_smax.innerHTML = `Khoảng cách s_max = <b>${s_max} mm</b> ≤ 400 mm (Đạt tiêu chuẩn cấu tạo TCVN 5574:2018)`;
+      }
+
+      // Sức chịu nén Ngh
+      const Ngh = 0.85 * (1.15 * Ab + 28 * ast_act);
+      document.getElementById('col-ngh').innerHTML = `${Ngh.toFixed(1)} <span class="stat-unit">kN</span>`;
+      document.getElementById('col-ngh-ton').innerText = `Tương đương ≈ ${(Ngh / 9.81).toFixed(1)} tấn tải trọng nén`;
+
+      // Verdict
+      const verdictBanner = document.getElementById('col-verdict');
+      const verdictIcon = document.getElementById('col-verdict-icon');
+      const verdictText = document.getElementById('col-verdict-text');
+
+      if (!pass_as || !pass_mu || !pass_t || !pass_smax) {
+        verdictBanner.className = "verdict-banner verdict-fail";
+        verdictIcon.innerText = "❌";
+        verdictText.innerText = "KẾT LUẬN: Phương án CỘT CHƯA HỢP LÝ! Vui lòng điều chỉnh số thanh hoặc phi thép.";
+      } else {
+        verdictBanner.className = "verdict-banner verdict-pass";
+        verdictIcon.innerText = "🛡️";
+        verdictText.innerText = "KẾT LUẬN: Cột đối xứng hoàn hảo, hàm lượng tối ưu, đảm bảo chịu nén uốn và thi công thuận lợi!";
+      }
+
+      drawColSVGCAD(b, h, combo);
+    }
+
+    // ========================================================
+    // --- ZERO-COLLISION CAD ENGINE: CỘT ---
+    // ========================================================
+    function drawColSVGCAD(b, h, combo) {
+      const svg = document.getElementById('col-svg');
+      svg.innerHTML = "";
+
+      const showDim = document.getElementById('col-chk-dim').checked;
+      const showLeader = document.getElementById('col-chk-leader').checked;
+      const showAxis = document.getElementById('col-chk-axis').checked;
+
+      // ViewBox: 700 x 520, Center at (340, 260)
+      const maxDrawW = 260;
+      const maxDrawH = 280;
+      const scale = Math.min(maxDrawW / b, maxDrawH / h);
+      const drawW = b * scale;
+      const drawH = h * scale;
+
+      const centerX = 340;
+      const centerY = 260;
+      const startX = centerX - drawW / 2;
+      const startY = centerY - drawH / 2;
+
+      // Defs
+      const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+      defs.innerHTML = `
+        <pattern id="concrete-hatch-col" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="4" cy="4" r="0.8" fill="#94a3b8" />
+          <circle cx="14" cy="14" r="0.8" fill="#94a3b8" />
+          <polygon points="6,15 8,12 10,15" fill="#cbd5e1" opacity="0.6"/>
+          <polygon points="15,5 17,2 19,5" fill="#cbd5e1" opacity="0.6"/>
+        </pattern>
+        <radialGradient id="rebar-grad-corner" cx="35%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#f87171" />
+          <stop offset="70%" stop-color="#dc2626" />
+          <stop offset="100%" stop-color="#7f1d1d" />
+        </radialGradient>
+        <radialGradient id="rebar-grad-sideh" cx="35%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#fb923c" />
+          <stop offset="70%" stop-color="#ea580c" />
+          <stop offset="100%" stop-color="#7c2d12" />
+        </radialGradient>
+        <radialGradient id="rebar-grad-sideb" cx="35%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#38bdf8" />
+          <stop offset="70%" stop-color="#0284c7" />
+          <stop offset="100%" stop-color="#075985" />
+        </radialGradient>
+      `;
+      svg.appendChild(defs);
+
+      // Centerline Axis
+      if (showAxis) {
+        const axisY = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        axisY.setAttribute("x1", centerX); axisY.setAttribute("y1", startY - 45);
+        axisY.setAttribute("x2", centerX); axisY.setAttribute("y2", startY + drawH + 50);
+        axisY.setAttribute("stroke", "#ef4444"); axisY.setAttribute("stroke-width", "1");
+        axisY.setAttribute("stroke-dasharray", "12, 3, 3, 3");
+        axisY.setAttribute("opacity", "0.6");
+        svg.appendChild(axisY);
+
+        const axisX = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        axisX.setAttribute("x1", startX - 60); axisX.setAttribute("y1", centerY);
+        axisX.setAttribute("x2", startX + drawW + 40); axisX.setAttribute("y2", centerY);
+        axisX.setAttribute("stroke", "#ef4444"); axisX.setAttribute("stroke-width", "1");
+        axisX.setAttribute("stroke-dasharray", "12, 3, 3, 3");
+        axisX.setAttribute("opacity", "0.6");
+        svg.appendChild(axisX);
+      }
+
+      // Concrete Body
+      const concrete = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      concrete.setAttribute("x", startX);
+      concrete.setAttribute("y", startY);
+      concrete.setAttribute("width", drawW);
+      concrete.setAttribute("height", drawH);
+      concrete.setAttribute("fill", "#f8fafc");
+      concrete.style.stroke = "var(--text-main)";
+      concrete.setAttribute("stroke-width", "2.5");
+      concrete.setAttribute("rx", "2");
+      svg.appendChild(concrete);
+
+      // Hatch
+      const hatch = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      hatch.setAttribute("x", startX);
+      hatch.setAttribute("y", startY);
+      hatch.setAttribute("width", drawW);
+      hatch.setAttribute("height", drawH);
+      hatch.setAttribute("fill", "url(#concrete-hatch-col)");
+      hatch.setAttribute("pointer-events", "none");
+      svg.appendChild(hatch);
+
+      // Stirrup
+      const cover = 25 * scale;
+      const stirrupW = drawW - 2 * cover;
+      const stirrupH = drawH - 2 * cover;
+      const stirrupX = startX + cover;
+      const stirrupY = startY + cover;
+
+      const stirrup = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      stirrup.setAttribute("x", stirrupX);
+      stirrup.setAttribute("y", stirrupY);
+      stirrup.setAttribute("width", stirrupW);
+      stirrup.setAttribute("height", stirrupH);
+      stirrup.setAttribute("fill", "none");
+      stirrup.style.stroke = "var(--secondary)";
+      stirrup.setAttribute("stroke-width", "2.5");
+      stirrup.setAttribute("rx", "6");
+      svg.appendChild(stirrup);
+
+      // 135 Hook
+      const hook = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+      const hookPts = `${stirrupX + 16},${stirrupY} ${stirrupX + 4},${stirrupY} ${stirrupX},${stirrupY + 4} ${stirrupX},${stirrupY + 16} ${stirrupX + 14},${stirrupY + 14}`;
+      hook.setAttribute("points", hookPts);
+      hook.setAttribute("fill", "none");
+      hook.style.stroke = "var(--primary)";
+      hook.setAttribute("stroke-width", "2.5");
+      svg.appendChild(hook);
+
+      // Corner Rebars
+      const r_corner = Math.max((combo.phi_corner / 2) * scale * 0.75, 5);
+      const x_left = stirrupX + r_corner + 1;
+      const x_right = stirrupX + stirrupW - r_corner - 1;
+      const y_top = stirrupY + r_corner + 1;
+      const y_bottom = stirrupY + stirrupH - r_corner - 1;
+
+      const cornerPts = [
+        [x_left, y_top],
+        [x_right, y_top],
+        [x_left, y_bottom],
+        [x_right, y_bottom]
+      ];
+
+      cornerPts.forEach(pt => {
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", pt[0]);
+        circle.setAttribute("cy", pt[1]);
+        circle.setAttribute("r", r_corner);
+        circle.setAttribute("fill", "url(#rebar-grad-corner)");
+        circle.style.stroke = "var(--danger)";
+        circle.setAttribute("stroke-width", "1.5");
+        svg.appendChild(circle);
+      });
+
+      // Side Bars along Edge h
+      const nh = combo.n_h || 0;
+      let lastSideH_Y = y_top;
+      if (nh > 0) {
+        const phi_h = combo.phi_h || combo.phi_corner;
+        const r_h = Math.max((phi_h / 2) * scale * 0.75, 5);
+        const gapY = (y_bottom - y_top) / (nh + 1);
+
+        for (let j = 1; j <= nh; j++) {
+          const cy = y_top + j * gapY;
+          lastSideH_Y = cy;
+          [x_left, x_right].forEach(cx => {
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", cx);
+            circle.setAttribute("cy", cy);
+            circle.setAttribute("r", r_h);
+            circle.setAttribute("fill", "url(#rebar-grad-sideh)");
+            circle.style.stroke = "var(--warning)";
+            circle.setAttribute("stroke-width", "1.5");
+            svg.appendChild(circle);
+          });
+        }
+      }
+
+      // Side Bars along Edge b
+      const nb = combo.n_b || 0;
+      if (nb > 0) {
+        const phi_b = combo.phi_b || combo.phi_corner;
+        const r_b = Math.max((phi_b / 2) * scale * 0.75, 5);
+        const gapX = (x_right - x_left) / (nb + 1);
+
+        for (let j = 1; j <= nb; j++) {
+          const cx = x_left + j * gapX;
+          [y_top, y_bottom].forEach(cy => {
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", cx);
+            circle.setAttribute("cy", cy);
+            circle.setAttribute("r", r_b);
+            circle.setAttribute("fill", "url(#rebar-grad-sideb)");
+            circle.style.stroke = "var(--primary-hover)";
+            circle.setAttribute("stroke-width", "1.5");
+            svg.appendChild(circle);
+          });
+        }
+      }
+
+      // CAD DIMENSIONS:
+      // Width b: ON TOP
+      if (showDim) {
+        const dimTopY = startY - 35;
+        drawCADDimension(svg, startX, dimTopY, startX + drawW, dimTopY, `b = ${b} mm`, true, "#1e293b", 13);
+
+        // Height h: STRICTLY ON THE LEFT (Will NEVER collide with Side Bar leaders on the right!)
+        const dimLeftX = startX - 45;
+        drawCADDimension(svg, dimLeftX, startY, dimLeftX, startY + drawH, `h = ${h} mm`, false, "#1e293b", 13);
+      }
+
+      // CAD LEADERS: Placed strictly on the RIGHT side with distinct Y positions (Completely avoiding collisions with Left Height dimension!)
+      if (showLeader) {
+        const flagStartX = startX + drawW + 35;
+        const flagEndX = startX + drawW + 175;
+
+        // Corner Bars Leader (Angled up-right to Y = startY + 15)
+        drawCADLeader(svg, x_right, y_top, flagStartX, startY + 15, flagEndX, startY + 15, `4 Phi ${combo.phi_corner} (Góc)`, "red");
+
+        // Edge h Leader (Angled to Y = centerY)
+        if (nh > 0) {
+          drawCADLeader(svg, x_right, lastSideH_Y, flagStartX, centerY, flagEndX, centerY, `${2 * nh} Phi ${combo.phi_h} (Cạnh h)`, "orange");
+        }
+
+        // Stirrup Leader on BOTTOM-RIGHT (Zero collision with Left Height dimension!)
+        drawCADLeader(svg, stirrupX + stirrupW, startY + drawH - cover - 10, flagStartX, startY + drawH - 15, flagEndX, startY + drawH - 15, `Đai Phi ${combo.phi_dai || 6} a100/a200`, "blue");
+      }
+    }
+
+    // ========================================================
+    // --- MODULE SÀN (SLAB) ---
+    // ========================================================
+    function setSlabMode(mode) {
+      currentSlabMode = mode;
+      document.getElementById('slab-btn-mode-auto').classList.toggle('active', mode === 'auto');
+      document.getElementById('slab-btn-mode-custom').classList.toggle('active', mode === 'custom');
+      document.getElementById('slab-auto-panel').style.display = mode === 'auto' ? 'block' : 'none';
+      document.getElementById('slab-custom-panel').style.display = mode === 'custom' ? 'block' : 'none';
+      document.getElementById('slab-audit-mode-lbl').innerText = mode === 'auto' ? 'Chế độ: Gợi ý tự động' : 'Chế độ: Tùy chỉnh nâng cao';
+
+      if (mode === 'custom') {
+        runSlabCustomAudit();
+      } else {
+        calculateSlab();
+      }
+    }
+
+    function loadAutoToCustomSlab() {
+      const combo = currentSelectedSlabRebar;
+      document.getElementById('slab-c-phi').value = combo.phi;
+      document.getElementById('slab-c-step').value = combo.step;
+      setSlabMode('custom');
+    }
+
+    function setSlabHs(hs) {
+      document.getElementById('slab-hs').value = hs;
+      onSlabDimensionChange();
+    }
+
+    function setSlabMu(val) {
+      document.getElementById('slab-mu').value = val;
+      document.getElementById('slab-mu-txt').innerText = val.toFixed(2) + "%";
+      calculateSlab();
+    }
+
+    function onSlabMuSlider() {
+      const val = parseFloat(document.getElementById('slab-mu').value);
+      document.getElementById('slab-mu-txt').innerText = val.toFixed(2) + "%";
+      calculateSlab();
+    }
+
+    function updateSlabPos() {
+      const pos = document.getElementById('slab-pos').value;
+      if (pos === "Gối") setSlabMu(0.60);
+      else setSlabMu(0.35);
+    }
+
+    function onSlabDimensionChange() {
+      if (currentSlabMode === 'auto') calculateSlab();
+      else runSlabCustomAudit();
+    }
+
+    function calculateSlab() {
+      const hs = parseFloat(document.getElementById('slab-hs').value) || 120;
+      const mu_s = parseFloat(document.getElementById('slab-mu').value) || 0.35;
+      const pos = document.getElementById('slab-pos').value;
+      
+      // Update V3 Mu Viz Bar
+      updateMuVizBar(mu_s, 0.1, 0.9, 'slab-mu-marker');
+
+      const as_cover = hs > 100 ? 20 : 15;
+      const h0 = hs - as_cover;
+      const as_req = (mu_s / 100) * 1000 * h0;
+      const as_req_cm2 = (as_req / 100).toFixed(2);
+
+      document.getElementById('slab-as-req-badge').innerText = `${Math.round(as_req)} mm²/m (${as_req_cm2} cm²/m)`;
+      document.getElementById('slab-vis-dim').innerText = `Dày hs = ${hs} mm (${pos})`;
+
+      // Update Formula Steps (V3)
+      let formulaPanel = document.getElementById('slab-formula-panel');
+      if (!formulaPanel) {
+        formulaPanel = document.createElement('div');
+        formulaPanel.id = 'slab-formula-panel';
+        formulaPanel.className = 'formula-steps';
+        const cardHeader = document.querySelector('#slab-tab .card-header').parentElement;
+        cardHeader.insertBefore(formulaPanel, cardHeader.children[1]);
+      }
+      formulaPanel.innerHTML = `
+        <div class="step-label">V3.0 Smart Calc: Tính toán diện tích thép bản sàn (dải 1m)</div>
+        <div class="step-line">1. Chiều dày bảo vệ: <i>a</i> = ${as_cover} mm (vì h<sub>s</sub> ${hs > 100 ? '> 100' : '≤ 100'} mm)</div>
+        <div class="step-line">2. Chiều cao làm việc: <i>h<sub>0</sub></i> = h<sub>s</sub> - a = ${hs} - ${as_cover} = <b>${h0} mm</b></div>
+        <div class="step-line">3. Diện tích thép: <i>A<sub>s,yc</sub></i> = (μ/100) × b × h<sub>0</sub> = (${mu_s.toFixed(2)}/100) × 1000 × ${h0}</div>
+        <div class="step-result">↳ A<sub>s,yc</sub> = ${Math.round(as_req)} mm²/m</div>
+      `;
+
+      if (currentSlabMode === 'auto') {
+        const sortedCombos = [...SLAB_COMBOS].sort((a, b) => a.as - b.as);
+        const validCombos = sortedCombos.filter(c => c.as >= as_req);
+        const chosen = validCombos.length > 0 ? validCombos[0] : sortedCombos[sortedCombos.length - 1];
+
+        const opt1 = chosen;
+        const opt2 = sortedCombos.find(c => c.as >= as_req && c.phi === 8) || chosen;
+        const opt3 = sortedCombos.find(c => c.as >= as_req && c.phi === 10) || chosen;
+
+        const displayList = [opt1];
+        if (opt2.name !== opt1.name) displayList.push(opt2);
+        if (opt3.name !== opt1.name && opt3.name !== opt2.name) displayList.push(opt3);
+
+        if (!currentSelectedSlabRebar || !displayList.some(c => c.name === currentSelectedSlabRebar.name)) {
+          currentSelectedSlabRebar = opt1;
+        }
+
+        renderSlabRebarCards(displayList, h0);
+        auditAndDrawSlab(hs, h0, as_req, currentSelectedSlabRebar);
+      } else {
+        runSlabCustomAudit();
+      }
+    }
+
+    function renderSlabRebarCards(list, h0) {
+      const container = document.getElementById('slab-rebar-options');
+      container.innerHTML = "";
+
+      list.forEach((combo, idx) => {
+        const isSel = currentSelectedSlabRebar && currentSelectedSlabRebar.name === combo.name;
+        const mu_tt = (combo.as / (1000 * h0)) * 100;
+
+        let tagText = idx === 0 ? "TỐI ƯU ĐỀ XUẤT" : `BƯỚC a = ${combo.step}mm`;
+        let tagClass = idx === 0 ? "tag-opt" : "tag-uni";
+
+        const card = document.createElement('div');
+        card.className = `rebar-card ${isSel ? 'selected' : ''}`;
+        card.onclick = () => {
+          currentSelectedSlabRebar = combo;
+          calculateSlab();
+        };
+
+        card.innerHTML = `
+          <div class="rebar-info">
+            <h4>${combo.name} <span class="rebar-tag ${tagClass}">${tagText}</span></h4>
+            <div class="rebar-sub">${combo.desc}</div>
+          </div>
+          <div class="rebar-as">
+            <div class="as-num">${combo.as} mm²/m</div>
+            <div class="as-mu">μ = ${mu_tt.toFixed(2)}% | ${(combo.as/100).toFixed(2)} cm²/m</div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function runSlabCustomAudit() {
+      const hs = parseFloat(document.getElementById('slab-hs').value) || 120;
+      const mu_s = parseFloat(document.getElementById('slab-mu').value) || 0.35;
+      const phi = parseInt(document.getElementById('slab-c-phi').value);
+      const step = parseInt(document.getElementById('slab-c-step').value);
+
+      const as_bar = (Math.PI * Math.pow(phi, 2)) / 4;
+      const as_total = Math.round((1000 / step) * as_bar);
+
+      document.getElementById('slab-custom-as-disp').innerText = `${as_total} mm²/m (${(as_total/100).toFixed(2)} cm²/m)`;
+
+      const as_cover = hs > 100 ? 20 : 15;
+      const h0 = hs - as_cover;
+      const as_req = (mu_s / 100) * 1000 * h0;
+      document.getElementById('slab-as-req-badge').innerText = `${Math.round(as_req)} mm²/m (${(as_req/100).toFixed(2)} cm²/m)`;
+
+      const customCombo = {
+        name: `Phi ${phi} a${step}`,
+        phi: phi,
+        step: step,
+        as: as_total,
+        desc: `Tùy chỉnh: Lưới thép Phi ${phi} bước ${step}mm`
+      };
+
+      currentSelectedSlabRebar = customCombo;
+      auditAndDrawSlab(hs, h0, as_req, customCombo);
+    }
+
+    function auditAndDrawSlab(hs, h0, as_req, combo) {
+      const as_act = combo.as;
+      const diff_pct = ((as_act - as_req) / as_req) * 100;
+
+      // 1. As Check
+      const icon_as = document.getElementById('slab-chk-as-icon');
+      const badge_as = document.getElementById('slab-chk-as-badge');
+      const desc_as = document.getElementById('slab-chk-as-desc');
+      let pass_as = false;
+
+      if (as_act >= as_req) {
+        pass_as = true;
+        icon_as.innerText = "✅";
+        badge_as.className = "audit-badge badge-pass";
+        badge_as.innerText = "ĐẠT CHUẨN";
+        desc_as.innerHTML = `As = <b>${as_act} mm²/m (${(as_act/100).toFixed(2)} cm²/m)</b> ≥ As_yc = <b>${Math.round(as_req)} mm²/m</b> (Dư +${diff_pct.toFixed(1)}%)`;
+      } else {
+        icon_as.innerText = "❌";
+        badge_as.className = "audit-badge badge-fail";
+        badge_as.innerText = "THIẾU THÉP";
+        desc_as.innerHTML = `As = <b>${as_act} mm²/m</b> < As_yc = <b>${Math.round(as_req)} mm²/m</b> (Thiếu ${Math.abs(diff_pct).toFixed(1)}%)`;
+      }
+
+      // 2. Mu Check
+      const mu_tt = (as_act / (1000 * h0)) * 100;
+      const icon_mu = document.getElementById('slab-chk-mu-icon');
+      const badge_mu = document.getElementById('slab-chk-mu-badge');
+      const desc_mu = document.getElementById('slab-chk-mu-desc');
+      let pass_mu = true;
+
+      if (mu_tt < 0.10) {
+        pass_mu = false;
+        icon_mu.innerText = "❌";
+        badge_mu.className = "audit-badge badge-fail";
+        badge_mu.innerText = "DƯỚI μ_MIN";
+        desc_mu.innerHTML = `μ = <b>${mu_tt.toFixed(2)}%</b> < 0.10% (Không đạt hàm lượng tối thiểu bản sàn)`;
+      } else {
+        icon_mu.innerText = "✅";
+        badge_mu.className = "audit-badge badge-pass";
+        badge_mu.innerText = "HỢP LÝ";
+        desc_mu.innerHTML = `μ = <b>${mu_tt.toFixed(2)}%</b> ≥ 0.10% (Rất hợp lý kinh tế)`;
+      }
+
+      // 3. Spacing step Check
+      const step = combo.step;
+      const step_limit = Math.min(200, 1.5 * hs);
+      const icon_step = document.getElementById('slab-chk-step-icon');
+      const badge_step = document.getElementById('slab-chk-step-badge');
+      const desc_step = document.getElementById('slab-chk-step-desc');
+      let pass_step = true;
+
+      if (step > 200 || step > 1.5 * hs) {
+        pass_step = false;
+        icon_step.innerText = "❌";
+        badge_step.className = "audit-badge badge-fail";
+        badge_step.innerText = "QUÁ THƯA";
+        desc_step.innerHTML = `Bước rải a = <b>${step} mm</b> vượt giới hạn cho phép (${Math.round(step_limit)} mm), nguy cơ nứt sàn`;
+      } else if (step < 70) {
+        pass_step = false;
+        icon_step.innerText = "❌";
+        badge_step.className = "audit-badge badge-fail";
+        badge_step.innerText = "QUÁ DÀY";
+        desc_step.innerHTML = `Bước rải a = <b>${step} mm</b> < 70 mm (Khó đổ lọt đá bê tông sàn)`;
+      } else {
+        icon_step.innerText = "✅";
+        badge_step.className = "audit-badge badge-pass";
+        badge_step.innerText = "ĐẠT";
+        desc_step.innerHTML = `Bước a = <b>${step} mm</b> ≤ 1.5h (${Math.round(1.5 * hs)}mm) và ≤ 200mm (Đạt chuẩn)`;
+      }
+
+      document.getElementById('slab-step-val').innerHTML = `${step} <span class="stat-unit">mm</span>`;
+      document.getElementById('slab-mu-tt').innerHTML = `${mu_tt.toFixed(2)} <span class="stat-unit">%</span>`;
+      document.getElementById('slab-as-act-val').innerText = `As chọn = ${as_act} mm²/m`;
+
+      // Verdict
+      const verdictBanner = document.getElementById('slab-verdict');
+      const verdictIcon = document.getElementById('slab-verdict-icon');
+      const verdictText = document.getElementById('slab-verdict-text');
+
+      if (!pass_as || !pass_mu || !pass_step) {
+        verdictBanner.className = "verdict-banner verdict-fail";
+        verdictIcon.innerText = "❌";
+        verdictText.innerText = "KẾT LUẬN: Lưới thép sàn CHƯA HỢP LÝ! Vui lòng chọn bước đan dày hơn hoặc tăng phi thép.";
+      } else {
+        verdictBanner.className = "verdict-banner verdict-pass";
+        verdictIcon.innerText = "🛡️";
+        verdictText.innerText = "KẾT LUẬN: Phương án rải thép bản sàn ĐẠT CHUẨN KỸ THUẬT, không bị nứt và chịu uốn tốt!";
+      }
+
+      drawSlabSVGCAD(hs, combo);
+    }
+
+    // ========================================================
+    // --- ZERO-COLLISION CAD ENGINE: BẢN SÀN ---
+    // ========================================================
+    function drawSlabSVGCAD(hs, combo) {
+      const svg = document.getElementById('slab-svg');
+      svg.innerHTML = "";
+
+      const showDim = document.getElementById('slab-chk-dim').checked;
+      const showLeader = document.getElementById('slab-chk-leader').checked;
+
+      // ViewBox: 700 x 520, Center at (340, 260)
+      const drawW = 460;
+      const drawH = Math.min(Math.max(hs * 1.5, 90), 160);
+      const centerX = 340;
+      const centerY = 260;
+      const startX = centerX - drawW / 2;
+      const startY = centerY - drawH / 2;
+
+      // Defs
+      const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+      defs.innerHTML = `
+        <pattern id="concrete-hatch-slab" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="4" cy="4" r="0.8" fill="#94a3b8" />
+          <circle cx="14" cy="14" r="0.8" fill="#94a3b8" />
+          <polygon points="6,15 8,12 10,15" fill="#cbd5e1" opacity="0.6"/>
+        </pattern>
+        <radialGradient id="rebar-grad-slab" cx="35%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#f87171" />
+          <stop offset="70%" stop-color="#dc2626" />
+          <stop offset="100%" stop-color="#7f1d1d" />
+        </radialGradient>
+      `;
+      svg.appendChild(defs);
+
+      // Concrete Slab Body
+      const concrete = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      concrete.setAttribute("x", startX);
+      concrete.setAttribute("y", startY);
+      concrete.setAttribute("width", drawW);
+      concrete.setAttribute("height", drawH);
+      concrete.setAttribute("fill", "#f8fafc");
+      concrete.style.stroke = "var(--text-main)";
+      concrete.setAttribute("stroke-width", "2.5");
+      concrete.setAttribute("rx", "2");
+      svg.appendChild(concrete);
+
+      // Hatch
+      const hatch = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      hatch.setAttribute("x", startX);
+      hatch.setAttribute("y", startY);
+      hatch.setAttribute("width", drawW);
+      hatch.setAttribute("height", drawH);
+      hatch.setAttribute("fill", "url(#concrete-hatch-slab)");
+      hatch.setAttribute("pointer-events", "none");
+      svg.appendChild(hatch);
+
+      // Broken-line boundary on Left and Right
+      [-1, 1].forEach(side => {
+        const bx = side === -1 ? startX : startX + drawW;
+        const zig = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        zig.setAttribute("d", `M ${bx},${startY - 6} L ${bx + side * 8},${startY + drawH * 0.3} L ${bx - side * 8},${startY + drawH * 0.7} L ${bx},${startY + drawH + 6}`);
+        zig.setAttribute("fill", "none");
+        zig.style.stroke = "var(--text-muted)";
+        zig.setAttribute("stroke-width", "2");
+        svg.appendChild(zig);
+      });
+
+      // Rebar positions
+      const step_draw = (combo.step / 1000) * drawW;
+      const cover = 15 * (drawH / hs);
+      const pos = document.getElementById('slab-pos').value;
+      const cy = (pos === "Gối") ? startY + cover + 6 : startY + drawH - cover - 6;
+
+      const numBars = Math.floor(drawW / step_draw);
+      const r = Math.max((combo.phi / 2) * 1.2, 5);
+
+      let firstBarX = 0, secondBarX = 0;
+      for (let i = 0; i <= numBars; i++) {
+        const cx = startX + 25 + i * step_draw;
+        if (cx <= startX + drawW - 25) {
+          if (i === 0) firstBarX = cx;
+          if (i === 1) secondBarX = cx;
+
+          const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          circle.setAttribute("cx", cx);
+          circle.setAttribute("cy", cy);
+          circle.setAttribute("r", r);
+          circle.setAttribute("fill", "url(#rebar-grad-slab)");
+          circle.style.stroke = "var(--danger)";
+          circle.setAttribute("stroke-width", "1.5");
+          svg.appendChild(circle);
+        }
+      }
+
+      // Transverse Distribution Rebar
+      const sec_cy = (pos === "Gối") ? cy + 16 : cy - 16;
+      const sec_line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      sec_line.setAttribute("x1", startX + 15);
+      sec_line.setAttribute("y1", sec_cy);
+      sec_line.setAttribute("x2", startX + drawW - 15);
+      sec_line.setAttribute("y2", sec_cy);
+      sec_line.setAttribute("stroke", "#0284c7");
+      sec_line.setAttribute("stroke-width", "3");
+      sec_line.setAttribute("stroke-dasharray", "8, 4");
+      svg.appendChild(sec_line);
+
+      // Dimension for Step a
+      if (secondBarX > firstBarX) {
+        const stepDimY = (pos === "Gối") ? cy - r - 18 : cy + r + 18;
+        drawCADDimension(svg, firstBarX, stepDimY, secondBarX, stepDimY, `a = ${combo.step} mm`, true, "#16a34a", 11);
+      }
+
+      // CAD Dimensions: Width (Top) & hs (Left - Zero Collision)
+      if (showDim) {
+        const dimTopY = startY - 35;
+        drawCADDimension(svg, startX, dimTopY, startX + drawW, dimTopY, `Dải bản sàn B = 1000 mm (1.0 m)`, true, "#1e293b", 13);
+
+        const dimLeftX = startX - 45;
+        drawCADDimension(svg, dimLeftX, startY, dimLeftX, startY + drawH, `hs = ${hs} mm`, false, "#1e293b", 13);
+      }
+
+      // CAD Leaders on Right and Left
+      if (showLeader && firstBarX > 0) {
+        const leaderTargetY = cy;
+        const flagEndX = startX + drawW + 40;
+        const flagEndY = (pos === "Gối") ? startY - 14 : startY + drawH + 34;
+        drawCADLeader(svg, firstBarX + 2 * step_draw, leaderTargetY, firstBarX + 2.5 * step_draw, flagEndY, flagEndX + 100, flagEndY, `Thép chịu lực Phi ${combo.phi} a${combo.step}`, "red");
+
+        drawCADLeader(svg, startX + 80, sec_cy, startX + 110, sec_cy + (pos === "Gối" ? 30 : -30), startX + 230, sec_cy + (pos === "Gối" ? 30 : -30), `Thép cấu tạo Phi 6 a200`, "blue");
+      }
+    }
+
+    // ========================================================
+    // --- GENERAL CAD UTILITIES (ZERO OVERLAP & SOLID HALO) ---
+    // ========================================================
+    function drawCADDimension(svg, x1, y1, x2, y2, text, isHorizontal, color = "#1e293b", fontSize = 12) {
+      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
+      // Dimension Line
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", x1); line.setAttribute("y1", y1);
+      line.setAttribute("x2", x2); line.setAttribute("y2", y2);
+      line.style.stroke = color === "#1e293b" ? "var(--text-main)" : color;
+      line.setAttribute("stroke-width", "1.2");
+      g.appendChild(line);
+
+      // Oblique 45 Ticks
+      const tick1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      const tick2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      if (isHorizontal) {
+        tick1.setAttribute("x1", x1 - 3.5); tick1.setAttribute("y1", y1 - 4.5); tick1.setAttribute("x2", x1 + 3.5); tick1.setAttribute("y2", y1 + 4.5);
+        tick2.setAttribute("x1", x2 - 3.5); tick2.setAttribute("y1", y2 - 4.5); tick2.setAttribute("x2", x2 + 3.5); tick2.setAttribute("y2", y2 + 4.5);
+      } else {
+        tick1.setAttribute("x1", x1 - 4.5); tick1.setAttribute("y1", y1 - 3.5); tick1.setAttribute("x2", x1 + 4.5); tick1.setAttribute("y2", y1 + 3.5);
+        tick2.setAttribute("x1", x2 - 4.5); tick2.setAttribute("y1", y2 - 3.5); tick2.setAttribute("x2", x2 + 4.5); tick2.setAttribute("y2", y2 + 3.5);
+      }
+      tick1.style.stroke = color === "#1e293b" ? "var(--text-main)" : color; tick1.setAttribute("stroke-width", "1.8");
+      tick2.style.stroke = color === "#1e293b" ? "var(--text-main)" : color; tick2.setAttribute("stroke-width", "1.8");
+      g.appendChild(tick1);
+      g.appendChild(tick2);
+
+      // Solid Halo Box behind text to completely prevent overlap
+      const midX = (x1 + x2) / 2;
+      const midY = (y1 + y2) / 2;
+      const textX = isHorizontal ? midX : midX - 8;
+      const textY = isHorizontal ? midY - 6 : midY + 4;
+
+      const halo = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      const textEstW = text.length * (fontSize * 0.58) + 8;
+      const textEstH = fontSize + 4;
+      halo.setAttribute("x", isHorizontal ? textX - textEstW / 2 : textX - textEstW);
+      halo.setAttribute("y", textY - fontSize + 1);
+      halo.setAttribute("width", textEstW);
+      halo.setAttribute("height", textEstH);
+      halo.style.fill = "var(--bg-card)";
+      halo.setAttribute("rx", "2");
+      halo.setAttribute("opacity", "0.85");
+      g.appendChild(halo);
+
+      // Dimension Text
+      const textElem = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      textElem.setAttribute("x", isHorizontal ? textX : textX - 4);
+      textElem.setAttribute("y", textY);
+      textElem.setAttribute("text-anchor", isHorizontal ? "middle" : "end");
+      textElem.style.fill = color === "#1e293b" ? "var(--text-main)" : color;
+      textElem.setAttribute("font-size", fontSize);
+      textElem.setAttribute("font-family", "Times New Roman");
+      textElem.setAttribute("font-weight", "bold");
+      textElem.textContent = text;
+
+      g.appendChild(textElem);
+      svg.appendChild(g);
+    }
+
+    function drawCADLeader(svg, xStart, yStart, xElbow, yElbow, xEnd, yEnd, labelText, theme = "red") {
+      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      const colVar = theme === "red" ? "var(--primary)" : (theme === "orange" ? "#ea580c" : "var(--primary)");
+
+      // Anchor Dot
+      const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      dot.setAttribute("cx", xStart);
+      dot.setAttribute("cy", yStart);
+      dot.setAttribute("r", "2.5");
+      dot.style.fill = colVar;
+      g.appendChild(dot);
+
+      // Polyline
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+      line.setAttribute("points", `${xStart},${yStart} ${xElbow},${yElbow} ${xEnd},${yEnd}`);
+      line.setAttribute("fill", "none");
+      line.style.stroke = colVar;
+      line.setAttribute("stroke-width", "1.3");
+      g.appendChild(line);
+
+      // Solid Halo for Leader Text
+      const midFlagX = (xElbow + xEnd) / 2;
+      const textY = yEnd - 4;
+      const textEstW = labelText.length * 6.8 + 6;
+      const halo = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      halo.setAttribute("x", midFlagX - textEstW / 2);
+      halo.setAttribute("y", textY - 12);
+      halo.setAttribute("width", textEstW);
+      halo.setAttribute("height", "15");
+      halo.style.fill = "var(--bg-card)";
+      halo.setAttribute("rx", "2");
+      halo.setAttribute("opacity", "0.85");
+      g.appendChild(halo);
+
+      // Text
+      const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      text.setAttribute("x", midFlagX);
+      text.setAttribute("y", textY);
+      text.setAttribute("text-anchor", "middle");
+      text.style.fill = colVar;
+      text.setAttribute("font-size", "12");
+      text.setAttribute("font-family", "Times New Roman");
+      text.setAttribute("font-weight", "bold");
+      text.textContent = labelText;
+      g.appendChild(text);
+
+      svg.appendChild(g);
+    }
+
+    // ========================================================
+    // --- PROJECT MANAGER ---
+    // ========================================================
+    function addBeamToProject() {
+      const name = document.getElementById('beam-name').value;
+      const pos = document.getElementById('beam-pos').value;
+      const b = document.getElementById('beam-b').value;
+      const h = document.getElementById('beam-h').value;
+      const as_req = parseFloat(document.getElementById('beam-as-req-badge').innerText);
+      const as_act = currentSelectedBeamRebar.as;
+      const mu_tt = (as_act / (b * (h - 40) / 100)) * 100;
+
+      projectItems.push({
+        type: "Dầm",
+        name: name,
+        pos: pos,
+        dim: `${b}x${h}`,
+        as_req: `${as_req.toFixed(2)} cm²`,
+        combo: currentSelectedBeamRebar.name,
+        as_act: `${as_act.toFixed(2)} cm²`,
+        mu: mu_tt.toFixed(2),
+        status: as_act >= as_req ? "✅ Đạt chuẩn" : "❌ Thiếu thép"
+      });
+
+      updateProjectTable();
+      showToast(`Đã thêm cấu kiện [${name}] vào danh mục!`);
+    }
+
+    function addColumnToProject() {
+      const name = document.getElementById('col-name').value;
+      const flr = document.getElementById('col-floor').value;
+      const b = document.getElementById('col-b').value;
+      const h = document.getElementById('col-h').value;
+      const as_req = parseFloat(document.getElementById('col-ast-req-badge').innerText);
+      const as_act = currentSelectedColRebar.as;
+      const mu_tt = (as_act / (b * h / 100)) * 100;
+
+      projectItems.push({
+        type: "Cột",
+        name: name,
+        pos: flr,
+        dim: `${b}x${h}`,
+        as_req: `${as_req.toFixed(2)} cm²`,
+        combo: currentSelectedColRebar.name,
+        as_act: `${as_act.toFixed(2)} cm²`,
+        mu: mu_tt.toFixed(2),
+        status: as_act >= as_req ? "✅ Đạt chuẩn" : "❌ Thiếu thép"
+      });
+
+      updateProjectTable();
+      showToast(`Đã thêm cấu kiện [${name}] vào danh mục!`);
+    }
+
+    function addSlabToProject() {
+      const name = document.getElementById('slab-name').value;
+      const pos = document.getElementById('slab-pos').value;
+      const hs = document.getElementById('slab-hs').value;
+      const as_req = parseFloat(document.getElementById('slab-as-req-badge').innerText);
+      const as_act = currentSelectedSlabRebar.as;
+      const mu_tt = (as_act / (1000 * (hs - 20))) * 100;
+
+      projectItems.push({
+        type: "Bản Sàn",
+        name: name,
+        pos: pos,
+        dim: `hs = ${hs}mm`,
+        as_req: `${as_req.toFixed(0)} mm²`,
+        combo: currentSelectedSlabRebar.name,
+        as_act: `${as_act} mm²`,
+        mu: mu_tt.toFixed(2),
+        status: as_act >= as_req ? "✅ Đạt chuẩn" : "❌ Thiếu thép"
+      });
+
+      updateProjectTable();
+      showToast(`Đã thêm cấu kiện [${name}] vào danh mục!`);
+    }
+
+    function updateProjectTable() {
+      const tbody = document.getElementById('project-table-body');
+      const emptyMsg = document.getElementById('project-empty');
+      const countBadge = document.getElementById('proj-count');
+
+      countBadge.innerText = projectItems.length;
+
+      if (projectItems.length === 0) {
+        tbody.innerHTML = "";
+        emptyMsg.style.display = "block";
+        return;
+      }
+
+      emptyMsg.style.display = "none";
+      tbody.innerHTML = "";
+
+      projectItems.forEach((item, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td><b>${item.type}</b></td>
+          <td><b>${item.name}</b></td>
+          <td>${item.pos}</td>
+          <td>${item.dim}</td>
+          <td>${item.as_req}</td>
+          <td><span style="color:#1e3a8a; font-weight:bold;">${item.combo}</span></td>
+          <td><b>${item.as_act}</b></td>
+          <td>${item.mu}%</td>
+          <td><span style="color:${item.status.includes('Đạt') ? '#16a34a' : '#dc2626'}; font-weight:bold;">${item.status}</span></td>
+          <td><button class="btn-delete" onclick="deleteProjectItem(${idx})">Xóa</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+      // Save to localStorage
+      try {
+        localStorage.setItem('v3_projects', JSON.stringify(projectItems));
+      } catch (e) {
+        console.warn("Could not save project data to localStorage", e);
+      }
+
+      // Also update weight table if it's currently selected
+      if(document.getElementById('weight-tab').classList.contains('active')) {
+        calculateWeightSummary();
+      }
+    }
+
+    function deleteProjectItem(idx) {
+      projectItems.splice(idx, 1);
+      updateProjectTable();
+      showToast('Đã xóa cấu kiện khỏi danh mục', 'warn');
+    }
+
+    function clearProjectList() {
+      if (confirm("Bạn có chắc chắn muốn xóa toàn bộ danh mục cấu kiện dự án?")) {
+        projectItems = [];
+        updateProjectTable();
+        showToast('Đã xóa toàn bộ dự án', 'warn');
+      }
+    }
+
+    function exportToCSV() {
+      if (projectItems.length === 0) {
+        alert("Danh mục dự án đang trống!");
+        return;
+      }
+
+      let csv = "\uFEFFSTT,Loại cấu kiện,Ký hiệu,Vị trí,Tiết diện,As yêu cầu,Cốt thép đề xuất,As chọn,Hàm lượng μ (%),Đánh giá\n";
+      projectItems.forEach((it, i) => {
+        csv += `${i + 1},${it.type},${it.name},${it.pos},${it.dim},${it.as_req},${it.combo},${it.as_act},${it.mu}%,${it.status}\n`;
+      });
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", "Danh_Muc_Gia_Thuyet_Cot_Thep_TCVN_v3.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('Đã xuất file CSV thành công!');
+    }
+
+    // ========================================================
+    // --- TAB 7: WEIGHT CALCULATOR ---
+    // ========================================================
+    function calculateWeightSummary() {
+      let total_kg = 0;
+      let beam_kg = 0;
+      let col_kg = 0;
+      
+      const tbody = document.getElementById('weight-table-body');
+      tbody.innerHTML = '';
+
+      if (projectItems.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:20px;">Chưa có cấu kiện. Hãy thêm từ Tab 1-3 và quay lại đây.</td></tr>';
+      }
+
+      projectItems.forEach((it, idx) => {
+        let as_cm2 = 0;
+        let L = 0;
+        let kg = 0;
+
+        // Parse As
+        const as_match = it.as_act.match(/([0-9.]+)/);
+        if (as_match) {
+           as_cm2 = parseFloat(as_match[1]);
+           if (it.type === "Bản Sàn") as_cm2 = as_cm2 / 100; // convert mm2/m to cm2/m
+        }
+
+        // Set typical length
+        if (it.type === "Dầm") L = 4.0;
+        else if (it.type === "Cột") L = 3.2;
+        else L = 1.0; // 1m for slab
+
+        kg = as_cm2 * L * 0.0785;
+
+        // Accumulate
+        total_kg += kg;
+        if (it.type === "Dầm") beam_kg += kg;
+        if (it.type === "Cột") col_kg += kg;
+
+        if (projectItems.length > 0) {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${idx + 1}</td>
+            <td><b>${it.type}</b></td>
+            <td>${it.name}</td>
+            <td>${it.dim}</td>
+            <td>${as_cm2.toFixed(2)}</td>
+            <td>${L.toFixed(1)}</td>
+            <td style="font-weight:bold; color:var(--primary);">${kg.toFixed(2)}</td>
+          `;
+          tbody.appendChild(tr);
+        }
+      });
+
+      document.getElementById('weight-total-items').innerText = projectItems.length;
+      document.getElementById('weight-total-kg').innerHTML = `${total_kg.toFixed(1)} <span class="stat-unit">kg</span>`;
+      document.getElementById('weight-beam-kg').innerHTML = `${beam_kg.toFixed(1)} <span class="stat-unit">kg</span>`;
+      document.getElementById('weight-col-kg').innerHTML = `${col_kg.toFixed(1)} <span class="stat-unit">kg</span>`;
+    }
+
+    // INITIALIZATION
+    window.onload = function() {
+      // Only calculate Beam initially since it's the active tab.
+      // Column and Slab SVG will be correctly calculated and drawn 
+      // ONLY when their tabs are opened via switchTab(), solving the SVG Initial Render Bug.
+      calculateBeam();
+
+      // Load project items from LocalStorage
+      let saved = null;
+      try {
+        saved = localStorage.getItem('v3_projects');
+      } catch(e) {}
+
+      if (saved) {
+        try {
+          projectItems = JSON.parse(saved);
+        } catch(e) {
+          projectItems = [];
+        }
+      } else {
+        // Sample preloaded items from the 3-story building
+        projectItems = [
+          { type: "Cột", name: "Cột C1", pos: "Tầng 1 & 2", dim: "200x300", as_req: "13.80 cm²", combo: "4 Phi 18 + 2 Phi 16", as_act: "14.20 cm²", mu: "2.37", status: "✅ Đạt chuẩn" },
+          { type: "Cột", name: "Cột C2", pos: "Tầng 1 & 2", dim: "250x300", as_req: "21.00 cm²", combo: "4 Phi 22 + 2 Phi 20", as_act: "21.49 cm²", mu: "2.86", status: "✅ Đạt chuẩn" },
+          { type: "Cột", name: "Cột C3", pos: "Tầng 1 & 2", dim: "250x300", as_req: "18.75 cm²", combo: "6 Phi 20", as_act: "18.85 cm²", mu: "2.51", status: "✅ Đạt chuẩn" },
+          { type: "Dầm", name: "Dầm D2-3", pos: "Gối trục 1, 2, 3", dim: "200x350", as_req: "8.99 cm²", combo: "2 Phi 18 + 2 Phi 16", as_act: "9.11 cm²", mu: "1.47", status: "✅ Đạt chuẩn" },
+          { type: "Dầm", name: "Dầm D2-3", pos: "Nhịp 1-2, 2-3", dim: "200x350", as_req: "7.44 cm²", combo: "3 Phi 18", as_act: "7.63 cm²", mu: "1.23", status: "✅ Đạt chuẩn" },
+          { type: "Dầm", name: "Dầm D2-2", pos: "Gối dầm", dim: "200x400", as_req: "10.44 cm²", combo: "2 Phi 18 + 2 Phi 20", as_act: "11.37 cm²", mu: "1.58", status: "✅ Đạt chuẩn" },
+          { type: "Bản Sàn", name: "Ô Sàn S1", pos: "Nhịp phương X", dim: "hs = 120mm", as_req: "350 mm²", combo: "Phi 8 a120", as_act: "419 mm²", mu: "0.42", status: "✅ Đạt chuẩn" },
+          { type: "Bản Sàn", name: "Ô Sàn S1", pos: "Gối dầm D2-2", dim: "hs = 120mm", as_req: "600 mm²", combo: "Phi 10 a100", as_act: "785 mm²", mu: "0.79", status: "✅ Đạt chuẩn" }
+        ];
+      }
+      updateProjectTable();
+    };
+  </script>
+</body>
+</html>
+'''
+
+def build_v3():
+    target_dir = r"e:\Model antigravity\Đồ án TCTC\Web_Version_3"
+    os.makedirs(target_dir, exist_ok=True)
+    target_file = os.path.join(target_dir, "Cong_Cu_Gia_Thuyet_Thep_TCVN_v3.html")
+    index_file = os.path.join(target_dir, "index.html")
+    # For V3 artifact testing
+    artifact_file = r"C:\Users\Admin\.gemini\antigravity\brain\eb399df4-562e-4034-a9b5-f883f3ca9407\Cong_Cu_Gia_Thuyet_Thep_TCVN_v3.html"
+    
+    with open(target_file, "w", encoding="utf-8") as f:
+        f.write(HTML_V3)
+    with open(index_file, "w", encoding="utf-8") as f:
+        f.write(HTML_V3)
+    
+    try:
+        os.makedirs(os.path.dirname(artifact_file), exist_ok=True)
+        with open(artifact_file, "w", encoding="utf-8") as f:
+            f.write(HTML_V3)
+    except:
+        pass
+        
+    print(f"Generated Version 3.0 at: {target_file} ({len(HTML_V3)} chars)")
+    print(f"Mirrored to artifact: {artifact_file}")
+
+if __name__ == "__main__":
+    build_v3()
